@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.firstgroup</groupId>
-    <artifactId>game-services-api</artifactId>
+    <artifactId>game-manager-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>game-services-api</name>
     <description>game-services-api</description>
