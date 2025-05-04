@@ -40,4 +40,11 @@ public class Game {
 
     @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserGame> userGames = new HashSet<>();
+
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<GameDeveloper> gameDeveloper = new HashSet<>();
+
+    @OneToMany(mappedBy = "gameID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<GamePublisher> gamePublisher = new HashSet<>();
+
 }
