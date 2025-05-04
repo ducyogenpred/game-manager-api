@@ -31,6 +31,7 @@ public class UserGame {
     private User userId;
 
     @ManyToOne
+    @MapsId("gameId")
     @JoinColumn(name = "game_id", nullable = false)
     private Game gameId;
 }
