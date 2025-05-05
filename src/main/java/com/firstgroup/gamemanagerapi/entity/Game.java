@@ -40,4 +40,5 @@ public class Game {
 
     @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserGame> userGames = new HashSet<>();
+
 }
