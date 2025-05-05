@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,6 +39,10 @@ public class Publisher {
     private Double ratingAverage;
 
     @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "publisherID", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Game> game = new HashSet<>();

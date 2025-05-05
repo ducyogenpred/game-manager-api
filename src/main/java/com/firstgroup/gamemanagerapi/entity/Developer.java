@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
+import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +25,24 @@ public class Developer {
 
     @Column(name = "name", nullable = false)
     private String developerName;
+
+    @Column(name = "description", nullable = false)
+    private TextArea description;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "review_count", nullable = false)
+    private Integer reviewCount;
+
+    @Column(name = "rating_average", nullable = false)
+    private Double ratingAverage;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "developerID", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Game> game = new HashSet<>();
