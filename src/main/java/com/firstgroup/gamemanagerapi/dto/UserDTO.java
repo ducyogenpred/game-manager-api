@@ -22,5 +22,6 @@ public class UserDTO {
     private String email;
     private String phoneNumber;
     private LocalDate birthDate;
+    private String description;
     private Set<UserGame> userGames;
 }
