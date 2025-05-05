@@ -1,4 +1,6 @@
 package com.firstgroup.gamemanagerapi.entity;
 
-public class GenreGameId {
+import java.io.Serializable;
+
+public class GenreGameId implements Serializable {
 }

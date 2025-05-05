@@ -22,7 +22,7 @@ public class Developer {
     @Column(name = "name", nullable = false)
     private String developerName;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "email", nullable = false)
@@ -40,6 +40,6 @@ public class Developer {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "developerId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Game> game = new HashSet<>();
+    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Game> games = new HashSet<>();
 }
