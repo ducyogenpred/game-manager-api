@@ -1,11 +1,13 @@
 package com.firstgroup.gameservicesapi.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +25,20 @@ public class Publisher {
     @Column(name = "name", nullable = false)
     private String publisherName;
 
+    @Column(name = "description", nullable = false)
+    private TextArea descripition;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "review_count", nullable = false)
+    private Integer reviewCount;
+
+    @Column(name = "rating_average", nullable = false)
+    private Double ratingAverage;
+
+    @Column(name = "created_at", nullable = false)
+
     @OneToMany(mappedBy = "publisherID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<GamePublisher> gamePublisher = new HashSet<>();
+    private Set<Game> game = new HashSet<>();
 }

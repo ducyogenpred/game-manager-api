@@ -24,5 +24,5 @@ public class Developer {
     private String developerName;
 
     @OneToMany(mappedBy = "developerID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<GameDeveloper> gameDeveloper = new HashSet<>();
+    private Set<Game> game = new HashSet<>();
 }
