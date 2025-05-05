@@ -16,5 +16,6 @@ public record UserRO(
         @NotBlank @Email String email,
         @NotBlank String phoneNumber,
         @NotBlank @Size(min = 8) String password,
-        @NotNull LocalDate birthDate
+        @NotNull LocalDate birthDate,
+        String description
 ) {}

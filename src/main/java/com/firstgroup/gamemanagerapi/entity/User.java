@@ -48,6 +48,9 @@ public class User implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
