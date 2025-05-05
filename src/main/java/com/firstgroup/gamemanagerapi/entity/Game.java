@@ -42,12 +42,10 @@ public class Game {
     private Set<UserGame> userGames = new HashSet<>();
 
     @ManyToOne
-    @MapsId("developerId")
     @JoinColumn(name = "developer_id", nullable = false)
-    private Developer developerId;
+    private Developer developer;
 
     @ManyToOne
-    @MapsId("publisherId")
     @JoinColumn(name = "publisher_id", nullable = false)
-    private Publisher publisherId;
+    private Publisher publisher;
 }
