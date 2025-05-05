@@ -1,10 +1,7 @@
 package com.firstgroup.gamemanagerapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -48,7 +46,7 @@ public class User implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "created_at", nullable = false)
@@ -57,6 +55,6 @@ public class User implements Serializable {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserGame> userGames = new HashSet<>();
 }

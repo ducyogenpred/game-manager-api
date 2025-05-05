@@ -1,19 +1,16 @@
 package com.firstgroup.gamemanagerapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "developers")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,8 +22,8 @@ public class Developer {
     @Column(name = "name", nullable = false)
     private String developerName;
 
-    @Column(name = "description", nullable = false)
-    private TextArea description;
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    private String description;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -43,6 +40,6 @@ public class Developer {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "developerId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Game> game = new HashSet<>();
+    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Game> games = new HashSet<>();
 }
