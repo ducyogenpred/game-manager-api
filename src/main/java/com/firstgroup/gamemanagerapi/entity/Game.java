@@ -41,4 +41,13 @@ public class Game {
     @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserGame> userGames = new HashSet<>();
 
+    @ManyToOne
+    @MapsId("developerId")
+    @JoinColumn(name = "developer_id", nullable = false)
+    private Developer developerId;
+
+    @ManyToOne
+    @MapsId("publisherId")
+    @JoinColumn(name = "publisher_id", nullable = false)
+    private Publisher publisherId;
 }
