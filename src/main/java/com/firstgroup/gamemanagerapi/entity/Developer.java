@@ -1,19 +1,16 @@
 package com.firstgroup.gamemanagerapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "developers")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,7 +23,7 @@ public class Developer {
     private String developerName;
 
     @Column(name = "description", nullable = false)
-    private TextArea description;
+    private String description;
 
     @Column(name = "email", nullable = false)
     private String email;

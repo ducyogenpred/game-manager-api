@@ -1,10 +1,7 @@
 package com.firstgroup.gamemanagerapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -13,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "publishers")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
