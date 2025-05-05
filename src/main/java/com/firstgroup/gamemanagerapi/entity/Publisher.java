@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -44,6 +43,6 @@ public class Publisher {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "publisherID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "publisherId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Game> game = new HashSet<>();
 }
