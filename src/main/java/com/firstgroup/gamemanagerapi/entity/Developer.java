@@ -24,10 +24,10 @@ public class Developer {
     private long id;
 
     @Column(name = "name", nullable = false)
-    private String developerName;
+    private String name;
 
     @Column(name = "description", nullable = false)
-    private TextArea description;
+    private String description;
 
     @Column(name = "email", nullable = false)
     private String email;
