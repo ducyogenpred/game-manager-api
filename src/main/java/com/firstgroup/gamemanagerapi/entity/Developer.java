@@ -20,7 +20,7 @@ public class Developer {
     private long id;
 
     @Column(name = "name", nullable = false)
-    private String developerName;
+    private String name;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -41,5 +41,5 @@ public class Developer {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Game> games = new HashSet<>();
+    private Set<Game> games;
 }

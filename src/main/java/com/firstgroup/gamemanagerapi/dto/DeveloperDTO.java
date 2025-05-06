@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +20,8 @@ public class DeveloperDTO {
     private String description;
     private Integer reviewCount;
     private Double ratingAverage;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+
 }

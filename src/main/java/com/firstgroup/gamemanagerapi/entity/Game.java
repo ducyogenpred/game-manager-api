@@ -37,7 +37,10 @@ public class Game {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserGame> userGames = new HashSet<>();
+    private Set<UserGame> userGames;
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews;
 
     @ManyToOne
     @JoinColumn(name = "developer_id", nullable = false)
