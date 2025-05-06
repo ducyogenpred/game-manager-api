@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record UserRO(
-        long id,
         @NotBlank String firstName,
         @NotBlank String middleName,
         @NotBlank String lastName,

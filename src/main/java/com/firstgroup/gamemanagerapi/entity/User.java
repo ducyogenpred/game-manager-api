@@ -6,7 +6,6 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -56,5 +55,5 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserGame> userGames = new HashSet<>();
+    private Set<UserGame> userGames;
 }

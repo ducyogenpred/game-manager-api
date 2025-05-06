@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,5 +40,5 @@ public class Developer {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Game> games = new HashSet<>();
+    private Set<Game> games;
 }

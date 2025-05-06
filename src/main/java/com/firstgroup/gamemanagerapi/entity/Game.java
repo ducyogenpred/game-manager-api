@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,7 +36,7 @@ public class Game {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserGame> userGames = new HashSet<>();
+    private Set<UserGame> userGames;
 
     @ManyToOne
     @JoinColumn(name = "developer_id", nullable = false)
@@ -46,4 +45,15 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
+
+    @ManyToMany
+    @JoinTable(
+            name = "games_genres",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres;
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Favorite> favorites;
 }
