@@ -1,9 +1,13 @@
-package com.firstgroup.gamemanagerapi.request;
+    package com.firstgroup.gamemanagerapi.request;
 
-import jakarta.validation.constraints.NotBlank;
+    import jakarta.validation.constraints.NotBlank;
 
-public record GameRO(
-        @NotBlank String title,
-        @NotBlank String publisher,
-        @NotBlank String developer
-) {}
+    import java.time.LocalDate;
+
+    public record GameRO(
+            @NotBlank String title,
+            @NotBlank String description,
+            @NotBlank LocalDate releaseDate,
+            @NotBlank String publisher,
+            @NotBlank String developer
+    ) {}
