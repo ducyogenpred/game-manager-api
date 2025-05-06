@@ -48,4 +48,8 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
+
+    @ManyToOne
+    @JoinColumn(name = "genre_id", nullable = false)
+    private Genre genre;
 }
