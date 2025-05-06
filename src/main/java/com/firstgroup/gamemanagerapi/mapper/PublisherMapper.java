@@ -8,7 +8,9 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PublisherMapper {
 
-    PublisherDTO toDto (Publisher publisher);
-    Publisher toEntity (PublisherDTO dto);
-    PublisherRO toRo (Publisher publisher);
+    PublisherDTO toDto(Publisher publisher);
+
+    Publisher toEntity(PublisherDTO dto);
+
+    PublisherRO toRO(Publisher publisher);
 }
