@@ -35,12 +35,10 @@ public class Review {
     private LocalDateTime updatedAT;
 
     @ManyToOne
-    @MapsId("userId")
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @MapsId("gameId")
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 }
