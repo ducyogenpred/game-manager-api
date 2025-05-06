@@ -7,7 +7,7 @@ import com.firstgroup.gamemanagerapi.request.GenreRO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface GenreGTO {
+public interface GenreMapper {
     GenreDTO toDto(Genre genre);
 
     Genre toEntity(GenreDTO dto);
