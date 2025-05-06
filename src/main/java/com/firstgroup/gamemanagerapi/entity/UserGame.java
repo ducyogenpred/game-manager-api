@@ -3,7 +3,6 @@ package com.firstgroup.gamemanagerapi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,10 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserGame implements Serializable {
+public class UserGame {
 
-    @EmbeddedId
-    private UserGameId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "purchased_at", nullable = false)
     private LocalDateTime purchasedAt;

@@ -23,12 +23,10 @@ public class Favorite {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @MapsId("userId")
     @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @ManyToOne
-    @MapsId("gameId")
     @JoinColumn(name = "game_id", nullable = false)
-    private Game gameId;
+    private Game game;
 }
