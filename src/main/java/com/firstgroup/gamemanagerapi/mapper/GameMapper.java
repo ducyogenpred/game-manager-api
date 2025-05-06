@@ -10,7 +10,5 @@ public interface GameMapper {
 
     GameDTO toDto(Game game);
 
-    Game toEntity(GameDTO dto);
-
-    GameRO toRO(Game game);
+    Game toEntity(GameRO ro);
 }
