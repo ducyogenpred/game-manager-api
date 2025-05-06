@@ -20,7 +20,9 @@ public class GameService {
     private final GameMapper gameMapper;
 
     public Game createGame(@Valid GameRO ro) {
-        if (gameRepository.)
+        if (gameRepository.existsGameById()) {
+
+        }
     }
 
     public List<GameDTO> getAllGames() {
