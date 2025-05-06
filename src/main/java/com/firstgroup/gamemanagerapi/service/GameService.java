@@ -4,7 +4,9 @@ import com.firstgroup.gamemanagerapi.dto.GameDTO;
 import com.firstgroup.gamemanagerapi.entity.Game;
 import com.firstgroup.gamemanagerapi.mapper.GameMapper;
 import com.firstgroup.gamemanagerapi.repository.GameRepository;
+import com.firstgroup.gamemanagerapi.request.GameRO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class GameService {
 
     private final GameRepository gameRepository;
     private final GameMapper gameMapper;
+
+    public Game createGame(@Valid GameRO ro) {
+        if (gameRepository.)
+    }
 
     public List<GameDTO> getAllGames() {
         return gameRepository.findAll()
@@ -44,14 +50,14 @@ public class GameService {
     }
 
     public List<GameDTO> getGamesByDeveloper(String developer) {
-        return gameRepository.findByDeveloperContainingIgnoreCase(developer)
+        return gameRepository.findByDeveloper_NameContainingIgnoreCase(developer)
                 .stream()
                 .map(gameMapper::toDto)
                 .toList();
     }
 
     public GameDTO getGameByDeveloper(String developer) {
-        Game game = gameRepository.findByDeveloperIgnoreCase(developer)
+        Game game = gameRepository.findByDeveloper_NameIgnoreCase(developer)
                 .orElseThrow(() -> new EntityNotFoundException("User with developer " + developer + " not found!"));
         return gameMapper.toDto(game);
     }
