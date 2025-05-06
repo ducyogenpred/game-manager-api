@@ -9,6 +9,6 @@ import org.mapstruct.Mapper;
 public interface PublisherMapper {
 
     PublisherDTO toDto (Publisher publisher);
-    PublisherDTO toEntity (Publisher publisher);
-    PublisherDTO toRo (Publisher publisher);
+    Publisher toEntity (Publisher publisher);
+    PublisherRO toRo (Publisher publisher);
 }
