@@ -38,6 +38,9 @@ public class Game {
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserGame> userGames;
 
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews;
+
     @ManyToOne
     @JoinColumn(name = "developer_id", nullable = false)
     private Developer developer;
@@ -45,15 +48,4 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
-
-    @ManyToMany
-    @JoinTable(
-            name = "games_genres",
-            joinColumns = @JoinColumn(name = "game_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    private Set<Genre> genres;
-
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Favorite> favorites;
 }

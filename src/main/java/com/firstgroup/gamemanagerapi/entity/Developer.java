@@ -2,7 +2,6 @@ package com.firstgroup.gamemanagerapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -19,7 +18,7 @@ public class Developer {
     private long id;
 
     @Column(name = "name", nullable = false)
-    private String developerName;
+    private String name;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;

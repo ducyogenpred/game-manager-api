@@ -24,6 +24,6 @@ public class Genre {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany(mappedBy = "genres")
-    private Set<Game> games;
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Game> genreGames;
 }
