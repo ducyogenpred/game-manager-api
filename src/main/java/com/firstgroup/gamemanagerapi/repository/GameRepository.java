@@ -1,6 +1,5 @@
 package com.firstgroup.gamemanagerapi.repository;
 
-import com.firstgroup.gamemanagerapi.entity.Developer;
 import com.firstgroup.gamemanagerapi.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +11,6 @@ import java.util.Optional;
 public interface GameRepository extends JpaRepository<Game, Long> {
     List<Game> findByTitleContainingIgnoreCase(String title);
     Optional<Game> findByTitleIgnoreCase(String title);
-    List<Game> findByDeveloperContainingIgnoreCase(String developer);
-    Optional<Game> findByDeveloperIgnoreCase(String developer);
+    List<Game> findByDeveloper_NameContainingIgnoreCase(String name);
+    Optional<Game> findByDeveloper_NameIgnoreCase(String name);
 }
