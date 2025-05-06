@@ -21,6 +21,4 @@ public class DeveloperDTO {
     private Double ratingAverage;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-
 }
