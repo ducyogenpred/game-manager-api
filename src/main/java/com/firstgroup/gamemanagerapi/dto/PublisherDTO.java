@@ -18,6 +18,5 @@ public class PublisherDTO {
     private String email;
     private Integer reviewCount;
     private Double ratingAverage;
-    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
