@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Service
@@ -20,27 +20,27 @@ public class PublisherService {
     private final PublisherRepository publisherRepository;
     private final PublisherMapper publisherMapper;
 
-    // Create a new publisher
-    public PublisherDTO createPublisher(@Valid PublisherRO ro) {
-        Publisher publisher = publisherMapper.toEntity(ro);
+    public PublisherService(PublisherRepository publisherRepository, PublisherMapper publisherMapper) {
+        this.publisherRepository = publisherRepository;
+        this.publisherMapper = publisherMapper;
+    }
 
-        publisher.setCreatedAt(LocalDateTime.now());
-        publisher.setUpdatedAt(LocalDateTime.now());
+    public PublisherDTO createPublisher(@Valid PublisherDTO ro) {
+        Publisher publisher; // Convert RO to Entity
+        publisher = publisherMapper.toEntity(ro);
 
         publisher = publisherRepository.save(publisher);
 
         return publisherMapper.toDto(publisher);
     }
 
-    // Get all publishers
     public List<PublisherDTO> getAllPublishers() {
         return publisherRepository.findAll()
                 .stream()
-                .map(publisherMapper::toDto)
+                .map(publisherMapper::toDto) // Convert entity to DTO
                 .toList();
     }
 
-    // Get publisher by ID
     public PublisherDTO getPublisherById(Long id) {
         Publisher publisher = publisherRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Publisher with id " + id + " not found!"));
@@ -48,7 +48,6 @@ public class PublisherService {
         return publisherMapper.toDto(publisher);
     }
 
-    // Get publishers by partial name match
     public List<PublisherDTO> getPublishersByName(String name) {
         return publisherRepository.findByNameContainingIgnoreCase(name)
                 .stream()
@@ -56,7 +55,6 @@ public class PublisherService {
                 .toList();
     }
 
-    // Get publisher by exact name
     public PublisherDTO getPublisherByName(String name) {
         Publisher publisher = publisherRepository.findByNameIgnoreCase(name)
                 .orElseThrow(() -> new EntityNotFoundException("Publisher with name " + name + " not found!"));
@@ -64,11 +62,19 @@ public class PublisherService {
         return publisherMapper.toDto(publisher);
     }
 
-    // Get publishers by minimum review count
     public List<PublisherDTO> getPublishersByReviewCount(Integer reviewCount) {
         return publisherRepository.findByReviewCountGreaterThanEqual(reviewCount)
                 .stream()
                 .map(publisherMapper::toDto)
                 .toList();
     }
+
+    public PublisherDTO updatePublisher(long id, @Valid PublisherRO ro) {
+        return null;
+    }
+
+    public void deletePublisherById(long id) {
+    }
+
+
 }
