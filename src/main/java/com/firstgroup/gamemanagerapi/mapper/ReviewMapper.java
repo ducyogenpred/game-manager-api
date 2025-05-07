@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 
 public interface ReviewMapper {
     ReviewDTO toDto (Review review);
-    Review toEntity (ReviewDRO dto);
+    Review toEntity (ReviewDTO dto);
     ReviewRO toRo (Review review);
 
 }
