@@ -8,12 +8,13 @@ import com.firstgroup.gamemanagerapi.request.UserRO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService {
 
     private final UserRepository userRepository;
@@ -59,7 +60,7 @@ public class UserService {
             throw new IllegalArgumentException("Username already exists!");
         }
 
-        userMapper.updateUserFromRO(ro, user);
+        /*userMapper.updateUserFromRO(ro, user);*/
 
         if (ro.password() != null && !ro.password().isBlank()) {
             user.setPassword(ro.password());
