@@ -62,4 +62,15 @@ public class Game {
     @JoinColumn(name = "publisher_id", nullable = false)
     @JsonBackReference
     private Publisher publisher;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

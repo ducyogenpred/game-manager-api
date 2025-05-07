@@ -31,4 +31,9 @@ public class Favorite {
     @JoinColumn(name = "game_id", nullable = false)
     @JsonBackReference
     private Game game;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
