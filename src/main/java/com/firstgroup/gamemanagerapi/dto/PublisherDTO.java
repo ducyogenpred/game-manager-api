@@ -11,13 +11,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DeveloperDTO {
+public class PublisherDTO {
     private long id;
     private String name;
-    private String email;
     private String description;
+    private String email;
     private Integer reviewCount;
     private Double ratingAverage;
-    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
