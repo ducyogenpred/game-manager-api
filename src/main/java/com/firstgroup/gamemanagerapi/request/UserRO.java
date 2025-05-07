@@ -9,16 +9,16 @@ public record UserRO(
         @Pattern(regexp = "[A-Za-z]+", message = "First name should only contain letters.")
         String firstName,
 
-        @NotBlank(message = "First name must not be blank.")
+        @NotBlank(message = "Middle name must not be blank.")
         @Pattern(regexp = "[A-Za-z]+", message = "Middle name should only contain letters.")
         String middleName,
 
-        @NotBlank(message = "First name must not be blank.")
+        @NotBlank(message = "Last name must not be blank.")
         @Pattern(regexp = "[A-Za-z]+", message = "Last name should only contain letters.")
         String lastName,
 
-        @NotBlank(message = "First name must not be blank.")
-        @Size(min = 4)
+        @NotBlank(message = "Display name must not be blank.")
+        @Size(min = 4, message = "Display name must have at least 4 characters.")
         String displayName,
 
         @NotBlank(message = "Email must not be blank.")
