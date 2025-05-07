@@ -1,5 +1,7 @@
 package com.firstgroup.gamemanagerapi.dto;
 
+public class ReviewDTO {
+  
 import com.firstgroup.gamemanagerapi.entity.Game;
 import com.firstgroup.gamemanagerapi.entity.User;
 import lombok.AllArgsConstructor;
@@ -11,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class ReviewDTO {
     private long id;
     private String header;
