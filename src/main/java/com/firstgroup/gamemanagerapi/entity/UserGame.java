@@ -35,6 +35,11 @@ public class UserGame {
     @JsonBackReference
     private Game game;
 
+    @PrePersist
+    protected void onCreate() {
+        this.purchasedAt = LocalDateTime.now();
+    }
+
     @Override
     public String toString() {
         return "UserGame{" +
@@ -46,10 +51,5 @@ public class UserGame {
                 ", gameId=" + game.getId() +
                 ", gameTitle=" + game.getTitle() +
                 "}";
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.purchasedAt = LocalDateTime.now();
     }
 }
