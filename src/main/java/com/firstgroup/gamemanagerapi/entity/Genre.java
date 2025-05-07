@@ -31,12 +31,7 @@ public class Genre {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "games_genres",
-            joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "game_id")
-    )
+    @ManyToMany(mappedBy = "genres")
     @JsonBackReference
     private Set<Game> games;
 
