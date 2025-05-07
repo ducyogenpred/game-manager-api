@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,15 +38,18 @@ public class Game {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     @JsonManagedReference
-    private Set<Genre> genres;
+    @Builder.Default
+    private Set<Genre> genres = new HashSet<>();
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<Review> reviews;
+    @Builder.Default
+    private Set<Review> reviews = new HashSet<>();
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<UserGame> userGame;
+    @Builder.Default
+    private Set<UserGame> userGame = new HashSet<>();
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

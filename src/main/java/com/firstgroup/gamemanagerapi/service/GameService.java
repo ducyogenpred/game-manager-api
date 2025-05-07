@@ -5,7 +5,9 @@ import com.firstgroup.gamemanagerapi.entity.Developer;
 import com.firstgroup.gamemanagerapi.entity.Game;
 import com.firstgroup.gamemanagerapi.entity.Publisher;
 import com.firstgroup.gamemanagerapi.mapper.GameMapper;
+import com.firstgroup.gamemanagerapi.repository.DeveloperRepository;
 import com.firstgroup.gamemanagerapi.repository.GameRepository;
+import com.firstgroup.gamemanagerapi.repository.PublisherRepository;
 import com.firstgroup.gamemanagerapi.request.GameRO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -19,9 +21,11 @@ import java.util.List;
 public class GameService {
 
     private final GameRepository gameRepository;
+    private final DeveloperRepository developerRepository;
+    private final PublisherRepository publisherRepository;
     private final GameMapper gameMapper;
 
-    /*public Game createGame(@Valid GameRO ro) {
+    public Game createGame(@Valid GameRO ro) {
 
         Developer developer = developerRepository.findById(ro.developerId())
                 .orElseThrow(() -> new EntityNotFoundException("Developer not found"));
@@ -42,7 +46,7 @@ public class GameService {
         game.setPublisher(ro.publisher());
 
         return gameRepository.save(game);
-    }*/
+    }
 
     public List<GameDTO> getAllGames() {
         return gameRepository.findAll()
@@ -53,7 +57,7 @@ public class GameService {
 
     public GameDTO getGameById(Long id) {
         Game game = gameRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found!"));
+                .orElseThrow(() -> new EntityNotFoundException("Game with id " + id + " not found!"));
         return gameMapper.toDto(game);
     }
 
@@ -66,20 +70,7 @@ public class GameService {
 
     public GameDTO getGameByTitle(String title) {
         Game game = gameRepository.findByTitleIgnoreCase(title)
-                .orElseThrow(() -> new EntityNotFoundException("User with title " + title + " not found!"));
-        return gameMapper.toDto(game);
-    }
-
-    public List<GameDTO> getGamesByDeveloper(String developer) {
-        return gameRepository.findByDeveloper_NameContainingIgnoreCase(developer)
-                .stream()
-                .map(gameMapper::toDto)
-                .toList();
-    }
-
-    public GameDTO getGameByDeveloper(String developer) {
-        Game game = gameRepository.findByDeveloper_NameIgnoreCase(developer)
-                .orElseThrow(() -> new EntityNotFoundException("User with developer " + developer + " not found!"));
+                .orElseThrow(() -> new EntityNotFoundException(title + " not found!"));
         return gameMapper.toDto(game);
     }
 }

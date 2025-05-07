@@ -7,6 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -56,11 +57,13 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<UserGame> userGames;
+    @Builder.Default
+    private Set<Review> reviews = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<Review> reviews;
+    @Builder.Default
+    private Set<UserGame> userGames = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

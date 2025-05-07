@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,7 +42,8 @@ public class Developer {
 
     @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<Game> games;
+    @Builder.Default
+    private Set<Game> games = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {
