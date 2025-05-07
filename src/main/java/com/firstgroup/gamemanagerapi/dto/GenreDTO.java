@@ -12,11 +12,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class GenreDTO {
     private long id;
     private String name;
     private String description;
-    private Set<Game> genreGames;
-
 }

@@ -1,7 +1,5 @@
 package com.firstgroup.gamemanagerapi.dto;
 
-public class ReviewDTO {
-  
 import com.firstgroup.gamemanagerapi.entity.Game;
 import com.firstgroup.gamemanagerapi.entity.User;
 import lombok.AllArgsConstructor;
@@ -20,5 +18,4 @@ public class ReviewDTO {
     private  Double rating;
     private User user;
     private Game game;
-
 }

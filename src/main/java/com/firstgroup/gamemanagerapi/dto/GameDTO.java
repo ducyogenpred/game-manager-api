@@ -16,5 +16,6 @@ public class GameDTO {
     private String title;
     private String description;
     private LocalDateTime releaseDate;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
