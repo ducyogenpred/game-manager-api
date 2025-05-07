@@ -5,33 +5,38 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 public record UserRO(
-        @NotBlank
+        @NotBlank(message = "First name must not be blank.")
+        @Pattern(regexp = "[A-Za-z]+", message = "First name should only contain letters.")
         String firstName,
 
-        @NotBlank
+        @NotBlank(message = "First name must not be blank.")
+        @Pattern(regexp = "[A-Za-z]+", message = "Middle name should only contain letters.")
         String middleName,
 
-        @NotBlank
+        @NotBlank(message = "First name must not be blank.")
+        @Pattern(regexp = "[A-Za-z]+", message = "Last name should only contain letters.")
         String lastName,
 
-        @NotBlank
+        @NotBlank(message = "First name must not be blank.")
         @Size(min = 4)
         String displayName,
 
-        @NotBlank
+        @NotBlank(message = "Email must not be blank.")
         @Email
         String email,
 
-        @NotBlank
+        @NotBlank(message = "Phone number must not be blank.")
         @Pattern(regexp = "\\d{10}",
-                message = "Mobile number must have exactly 10 digits")
+                message = "Phone number must have exactly 10 digits.")
         String phoneNumber,
 
-        @NotBlank
-        @Size(min = 8)
+        @NotBlank(message = "Password must not be blank.")
+        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=\\\\S+$).{8,}",
+                message = "Password must have at least one digit, one lowercase letter, one uppercase letter, and one special character.")
         String password,
 
-        @NotNull
+        @NotNull(message = "Birthdate is required.")
+        @Past(message = "Birthdate must not be in the future.")
         LocalDate birthDate,
 
         String description

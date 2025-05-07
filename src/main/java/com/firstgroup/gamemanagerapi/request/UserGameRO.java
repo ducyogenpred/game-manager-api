@@ -1,9 +1,16 @@
 package com.firstgroup.gamemanagerapi.request;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
 
-public record FavoriteRO(
+import java.time.LocalDateTime;
+
+public record UserGameRO(
+        @NotNull(message = "Purchased date must not be blank.")
+        @Past(message = "Purchased date must not be in the future.")
+        LocalDateTime purchaseAt,
+
         @NotNull(message = "User ID is required.")
         @Positive(message = "User ID must be positive.")
         Long userId,
