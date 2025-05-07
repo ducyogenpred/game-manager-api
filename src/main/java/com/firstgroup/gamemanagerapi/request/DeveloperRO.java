@@ -1,5 +1,8 @@
 package com.firstgroup.gamemanagerapi.request;
 
+public record DeveloperRO(
+
+) {
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
