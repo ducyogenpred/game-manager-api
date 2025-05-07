@@ -47,4 +47,9 @@ public class UserGame {
                 ", gameTitle=" + game.getTitle() +
                 "}";
     }
+
+    @PrePersist
+    protected void onCreate() {
+        this.purchasedAt = LocalDateTime.now();
+    }
 }
