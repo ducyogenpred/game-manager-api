@@ -3,7 +3,6 @@ package com.firstgroup.gamemanagerapi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -41,5 +40,5 @@ public class Publisher {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Game> game;
+    private Set<Game> games;
 }

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
     public record PublisherRO (
         @NotBlank String name,
-        @NotBlank String Description,
+        @NotBlank String description,
         @NotBlank @Email String email
     ) {}
 
