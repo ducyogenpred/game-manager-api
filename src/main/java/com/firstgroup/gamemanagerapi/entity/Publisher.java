@@ -1,9 +1,8 @@
 package com.firstgroup.gamemanagerapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -22,7 +21,7 @@ public class Publisher {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "email", nullable = false)
@@ -41,5 +40,6 @@ public class Publisher {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Game> game;
+    @JsonManagedReference
+    private Set<Game> games;
 }

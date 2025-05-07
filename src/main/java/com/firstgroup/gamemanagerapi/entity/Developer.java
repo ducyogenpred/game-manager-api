@@ -1,5 +1,6 @@
 package com.firstgroup.gamemanagerapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -39,5 +40,6 @@ public class Developer {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Game> games;
 }
