@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 
-    public interface PublisherRepository extendsp JpaRepository<Publisher, Long> {
+    public interface PublisherRepository extends JpaRepository<Publisher, Long> {
 
     List<Publisher> findByNameContainingIgnoreCase(String name);
     Optional<Publisher> findByNameIgnoreCase(String name);
