@@ -3,7 +3,7 @@ package com.firstgroup.gamemanagerapi.mapper;
 import com.firstgroup.gamemanagerapi.dto.DeveloperDTO;
 import com.firstgroup.gamemanagerapi.entity.Developer;
 import com.firstgroup.gamemanagerapi.request.DeveloperRO;
-import com.firstgroup.gamemanagerapi.request.DeveloperRo;
+import com.firstgroup.gamemanagerapi.request.DeveloperRO;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
