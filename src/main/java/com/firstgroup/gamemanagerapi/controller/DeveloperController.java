@@ -21,4 +21,5 @@ public class DeveloperController {
     public ResponseEntity<DeveloperDTO> createDeveloper (@Valid @RequestBody DeveloperRO ro) {
         return ResponseEntity.ok(developerService.createDeveloper(ro));
     }
+
 }
