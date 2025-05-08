@@ -5,8 +5,11 @@ import com.firstgroup.gamemanagerapi.entity.Developer;
 import com.firstgroup.gamemanagerapi.request.DeveloperRO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+
+@Mapper
 public interface DeveloperMapper {
-    DeveloperDTO toDto(Developer developer);
-    Developer toEntity(DeveloperRO developer);
+
+    Developer toEntity(DeveloperRO ro);
+    DeveloperDTO toDto(Developer entity);
+    DeveloperRO toRO (Developer developer);
 }
