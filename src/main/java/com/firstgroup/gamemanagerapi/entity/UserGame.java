@@ -1,5 +1,6 @@
 package com.firstgroup.gamemanagerapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,15 +23,22 @@ public class UserGame {
     private LocalDateTime purchasedAt;
 
     @Column(name = "hours_played")
-    private Integer hoursPlayed;
+    private int hoursPlayed;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
+    @JsonBackReference
     private Game game;
+
+    @PrePersist
+    protected void onCreate() {
+        this.purchasedAt = LocalDateTime.now();
+    }
 
     @Override
     public String toString() {

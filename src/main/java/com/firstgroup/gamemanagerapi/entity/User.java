@@ -1,11 +1,13 @@
 package com.firstgroup.gamemanagerapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class User implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -55,9 +56,23 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserGame> userGames;
+    @JsonManagedReference
+    @Builder.Default
+    private Set<Review> reviews = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Review> reviews;
+    @JsonManagedReference
+    @Builder.Default
+    private Set<UserGame> userGames = new HashSet<>();
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

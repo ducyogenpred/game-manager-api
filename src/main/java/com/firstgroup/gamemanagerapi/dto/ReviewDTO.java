@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class ReviewDTO {
     private long id;
     private String header;
@@ -19,5 +18,4 @@ public class ReviewDTO {
     private  Double rating;
     private User user;
     private Game game;
-
 }

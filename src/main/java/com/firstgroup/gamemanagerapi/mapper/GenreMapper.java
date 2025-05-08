@@ -9,11 +9,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface GenreMapper {
     GenreDTO toDto(Genre genre);
-
-    Genre toEntity(GenreDTO dto);
-
-    GenreRO toRO(Genre genre);
-
-
-
+    Genre toEntity(GenreRO ro);
 }
