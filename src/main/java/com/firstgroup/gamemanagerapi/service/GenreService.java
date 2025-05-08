@@ -29,6 +29,53 @@ public class GenreService {
         Genre genre = genreMapper.toEntity(ro);
         return genreMapper.toDto(genreRepository.save(genre));
     }
+    public List <GenreDTO> getAllGenres(){
+        return genreRepository.findAllByOrderByName()
+                .stream()
+                .map(genreMapper::toDto)
+                .toList();
+    }
 
+    public GenreDTO getGenreById (Long id){
+        return genreMapper.toDto(genreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id" + id + "not found")));
+    }
+
+    public GenreDTO getGenreByName(String name){
+        return genreMapper.toDto(genreRepository.findByName(name)
+                .orElseThrow (() -> new EntityNotFoundException("Genre with name" + name + "not found")));
+    }
+
+    public List<GenreDTO> searchGenreByName(String nameFragment){
+        return genreRepository.findByNameContainingIgnoreCase(nameFragment)
+                .stream()
+                .map(genreMapper::toDto)
+                .toList();
+    }
+
+    @Transactional
+    public GenreDTO updateGenre (Long id, @Valid GenreRO ro) {
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id" + id + "not found"));
+        if (!genre.getName().equals(ro.name()) &&
+                genreRepository.existByName(ro.name())) {
+            throw new IllegalArgumentException("Genre with me" + ro.name() + " already exist");
+        }
+
+        genre.setName(ro.name());
+        genre.setDescription(ro.description());
+
+        return genreMapper.toDto(genreRepository.save(genre));
+    }
+
+    @Transactional
+    public void deleteGenre (Long id){
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id" + id + "not found"));
+
+        genreRepository.delete(genre);
+
+
+    }
 
 }
