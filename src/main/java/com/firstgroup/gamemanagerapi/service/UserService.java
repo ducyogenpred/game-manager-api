@@ -10,8 +10,10 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor()
@@ -45,7 +47,7 @@ public class UserService {
 
     public UserDTO getUserById(long id) {
         return userMapper.toDto(userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User with this id does not exist.")));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist.")));
     }
 
     public UserDTO getUserByDisplayName(String displayName) {
