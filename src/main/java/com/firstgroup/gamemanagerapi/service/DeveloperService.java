@@ -32,16 +32,22 @@ public class DeveloperService {
         return developerMapper.toDto(developerRepository.save(developer));
     }
 
-    public List<DeveloperDTO> getAllDevelopers() {
-        return developerRepository.findAll()
-                .stream()
-                .map(developerMapper::toDto)
-                .toList();
-    }
+//    public List<DeveloperDTO> getAllDevelopers() {
+//        return developerRepository.findAll()
+//                .stream()
+//                .map(developerMapper::toDto)
+//                .toList();
+//    }
 
-    public DeveloperDTO getAllDevelopersById(Long id) {
+    public DeveloperDTO getDevelopersById(Long id) {
         Developer developer = developerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Developer with id" + id + "already exists"));
+        return developerMapper.toDto(developer);
+    }
+
+    public DeveloperDTO getDevelopersByName(String name) {
+        Developer developer = developerRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Developer with name" + name + "already exists"));
         return developerMapper.toDto(developer);
     }
 
@@ -73,7 +79,12 @@ public class DeveloperService {
         return developerRepository.save(developer);
     }
 
-        public void deleteDeveloperById ( long id){
-            developerRepository.deleteById(id);
-        }
+    @Transactional
+    public Developer deleteDeveloper (long id){
+        Developer developer = developerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Developer with id" + id + "already exists"));
+
+        developerRepository.delete(developer);
+        return developer;
     }
+}
