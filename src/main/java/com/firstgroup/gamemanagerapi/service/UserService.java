@@ -26,7 +26,7 @@ public class UserService {
     @Transactional
     public UserDTO createUser(@Valid UserRO ro) {
         if (userRepository.existsByDisplayName(ro.displayName())) {
-            throw new IllegalArgumentException("User with this display name already exists.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this display name already exists.");
         }
 
         if (userRepository.existsByEmail(ro.email())) {
@@ -61,7 +61,7 @@ public class UserService {
     }
 
     @Transactional
-    public User patchUser(Long id, @Valid UserPatchRO ro) {
+    public UserDTO patchUser(Long id, @Valid UserPatchRO ro) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("User with this id does not exist.")
         );
@@ -84,15 +84,11 @@ public class UserService {
             user.setEmail(email);
         }
 
-        ro.firstName().ifPresent(user::setFirstName);
-        ro.middleName().ifPresent(user::setMiddleName);
-        ro.lastName().ifPresent(user::setLastName);
-        ro.phoneNumber().ifPresent(user::setPhoneNumber);
-        ro.password().ifPresent(password -> user.setPassword(passwordEncoder.encode(password)));
-        ro.birthDate().ifPresent(user::setBirthDate);
-        ro.description().ifPresent(user::setDescription);
+        userMapper.updateUserFromPatchRo(ro, user);
 
-        return userRepository.save(user);
+        ro.password().ifPresent(password -> user.setPassword(passwordEncoder.encode(password)));
+
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Transactional
