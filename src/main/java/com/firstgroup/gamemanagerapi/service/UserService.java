@@ -34,6 +34,14 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User with this id does not exist."));
     }
 
+    public User getUserByDisplayName(String displayName) {
+        return userRepository.findByDisplayName(displayName).orElseThrow(() -> new IllegalArgumentException("User with this display name does not exist."));
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User with this email does not exist."));
+    }
+
     @Transactional
     public User patchUser(Long id, @Valid UserPatchRO ro) {
         User user = userRepository.findById(id).orElseThrow(
