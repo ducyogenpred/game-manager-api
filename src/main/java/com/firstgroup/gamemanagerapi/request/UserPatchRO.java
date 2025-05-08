@@ -1,6 +1,6 @@
 package com.firstgroup.gamemanagerapi.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public record UserPatchRO(
@@ -11,6 +11,6 @@ public record UserPatchRO(
         Optional<String> email,
         Optional<String> phoneNumber,
         Optional<String> password,
-        Optional<LocalDateTime> birthDate,
+        Optional<LocalDate> birthDate,
         Optional<String> description
 ) {}
