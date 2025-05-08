@@ -3,8 +3,6 @@ package com.firstgroup.gamemanagerapi.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDateTime;
-
 public record DeveloperRO (
         @NotBlank(message = "Publisher name must not be blank") String name,
         String Description,
