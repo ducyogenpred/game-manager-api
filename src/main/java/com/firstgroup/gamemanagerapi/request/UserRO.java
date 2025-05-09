@@ -9,7 +9,6 @@ public record UserRO(
         @Pattern(regexp = "[A-Za-z]+", message = "First name should only contain letters.")
         String firstName,
 
-        @NotBlank(message = "Middle name must not be blank.")
         @Pattern(regexp = "[A-Za-z]+", message = "Middle name should only contain letters.")
         String middleName,
 
