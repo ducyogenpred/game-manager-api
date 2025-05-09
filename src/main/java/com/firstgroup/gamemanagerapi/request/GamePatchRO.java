@@ -2,7 +2,6 @@ package com.firstgroup.gamemanagerapi.request;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Stream;
 
 public record GamePatchRO(
