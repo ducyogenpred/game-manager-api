@@ -22,9 +22,5 @@ public record GameRO(
 
         @NotNull(message = "Developer ID is required.")
         @Positive(message = "Developer ID must be positive.")
-        long developerId,
-
-        @NotNull(message = "At least one genre must be provided.")
-        @Size(min = 1, message = "At least one genre must be selected.")
-        Set<Long> genreIds
+        long developerId
 ) {}

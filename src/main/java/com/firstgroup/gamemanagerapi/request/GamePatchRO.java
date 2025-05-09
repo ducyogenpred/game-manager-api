@@ -7,6 +7,5 @@ public record GamePatchRO(
         String title,
         LocalDate releaseDate,
         long publisherId,
-        long developerId,
-        Set<Long> genreIds
+        long developerId
 ) {}
