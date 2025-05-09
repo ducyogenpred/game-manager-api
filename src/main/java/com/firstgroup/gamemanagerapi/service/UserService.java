@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,7 +20,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserDTO createUser(@Valid UserRO ro) {
@@ -35,7 +33,7 @@ public class UserService {
 
         User user = userMapper.toEntity(ro);
 
-        user.setPassword(passwordEncoder.encode(ro.password()));
+        user.setPassword(ro.password());
 
         try {
             User savedUser = userRepository.save(user);
@@ -85,8 +83,6 @@ public class UserService {
         }
 
         userMapper.updateUserFromPatchRo(ro, user);
-
-        ro.password().ifPresent(password -> user.setPassword(passwordEncoder.encode(password)));
 
         return userMapper.toDto(userRepository.save(user));
     }
