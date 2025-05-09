@@ -25,7 +25,7 @@ public class UserGame {
     @Column(name = "hours_played", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int hoursPlayed;
 
-    @Column(name = "is_favorite", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "is_favorite", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isFavorite;
 
     @ManyToOne
