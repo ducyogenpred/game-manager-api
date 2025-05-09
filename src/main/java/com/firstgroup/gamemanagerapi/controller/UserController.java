@@ -1,7 +1,6 @@
 package com.firstgroup.gamemanagerapi.controller;
 
 import com.firstgroup.gamemanagerapi.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.entity.User;
 import com.firstgroup.gamemanagerapi.request.UserPatchRO;
 import com.firstgroup.gamemanagerapi.request.UserRO;
 import com.firstgroup.gamemanagerapi.service.UserService;
