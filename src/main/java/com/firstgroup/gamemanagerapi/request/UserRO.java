@@ -31,12 +31,12 @@ public record UserRO(
         String phoneNumber,
 
         @NotBlank(message = "Password must not be blank.")
-        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=\\\\S+$).{8,}",
+        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=\\S+$).{8,}",
                 message = "Password must have at least one digit, one lowercase letter, one uppercase letter, and one special character.")
         String password,
 
         @NotNull(message = "Birthdate is required.")
-        @Past(message = "Birthdate must not be in the future.")
+        @Past(message = "Birthdate must be in the past.")
         LocalDate birthDate,
 
         String description

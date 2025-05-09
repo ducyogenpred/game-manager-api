@@ -9,13 +9,13 @@ public record ReviewRO(
         @NotNull(message = "Rating is required.")
         @DecimalMin(value = "1.0", inclusive = true, message = "Rating must be at least 1.0.")
         @DecimalMax(value = "5.0", inclusive = true, message = "Rating must be at most 5.0.")
-        @NotNull Double rating,
+        @NotNull double rating,
 
         @NotNull(message = "User ID is required.")
         @Positive(message = "User ID must be positive.")
-        Long userId,
+        long userId,
 
         @NotNull(message = "Game ID is required.")
         @Positive(message = "Game ID must be positive.")
-        Long gameId
+        long gameId
 ) {}
