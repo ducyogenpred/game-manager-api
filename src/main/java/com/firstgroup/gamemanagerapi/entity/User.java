@@ -63,7 +63,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @Builder.Default
-    private Set<UserGame> userGames = new HashSet<>();
+    private Set<UserGame> games = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

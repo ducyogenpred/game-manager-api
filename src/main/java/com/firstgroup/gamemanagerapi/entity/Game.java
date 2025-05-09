@@ -31,31 +31,21 @@ public class Game {
     @Column(name = "release_date", nullable = false)
     private LocalDate releaseDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "games_genres",
-            joinColumns = @JoinColumn(name = "game_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    @JsonManagedReference
-    @Builder.Default
-    private Set<Genre> genres = new HashSet<>();
-
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    @Builder.Default
-    private Set<Review> reviews = new HashSet<>();
-
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    @Builder.Default
-    private Set<UserGame> userGame = new HashSet<>();
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @Builder.Default
+    private Set<GameGenre> genres = new HashSet<>();
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @Builder.Default
+    private Set<UserGame> users = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "developer_id", nullable = false)

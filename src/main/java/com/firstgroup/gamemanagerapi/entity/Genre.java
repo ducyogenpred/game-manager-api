@@ -1,6 +1,7 @@
 package com.firstgroup.gamemanagerapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,10 +33,10 @@ public class Genre {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToMany(mappedBy = "genres")
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @Builder.Default
-    private Set<Game> games = new HashSet<>();
+    private Set<GameGenre> genres = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {
