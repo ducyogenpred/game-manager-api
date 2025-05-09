@@ -25,7 +25,7 @@ public record UserRO(
         String email,
 
         @NotBlank(message = "Phone number must not be blank.")
-        @Pattern(regexp = "\\d{10}",
+        @Pattern(regexp = "\\+?[0-9]{10,15}",
                 message = "Phone number must have exactly 10 digits.")
         String phoneNumber,
 
