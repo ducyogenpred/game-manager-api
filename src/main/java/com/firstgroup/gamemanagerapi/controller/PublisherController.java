@@ -32,6 +32,11 @@ public class PublisherController {
         return ResponseEntity.ok(publisherService.getPublisherByName(name));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<PublisherDTO> getPublisherByEmail (@PathVariable String email) {
+        return ResponseEntity.ok(publisherService.getPublisherByEmail(email));
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<PublisherDTO> patchPublisher (@PathVariable Long id, @Valid @RequestBody PublisherPatchRO ro) {
         return ResponseEntity.ok(publisherService.patchPublisher(id, ro));
