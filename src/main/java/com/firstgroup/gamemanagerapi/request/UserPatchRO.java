@@ -1,7 +1,8 @@
 package com.firstgroup.gamemanagerapi.request;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public record UserPatchRO(
@@ -16,7 +17,16 @@ public record UserPatchRO(
         String description
 ) {
     public boolean isEmpty() {
-        return Stream.of(firstName, middleName, lastName, displayName, email, phoneNumber, password, birthDate, description)
-                .allMatch(Objects::isNull);
+        return Stream.of(
+                        firstName,
+                        middleName,
+                        lastName,
+                        displayName,
+                        email,
+                        phoneNumber,
+                        password,
+                        description
+                )
+                .allMatch(StringUtils::isEmpty);
     }
 }
