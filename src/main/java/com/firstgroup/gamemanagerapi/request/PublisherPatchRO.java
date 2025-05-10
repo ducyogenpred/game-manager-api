@@ -1,9 +1,15 @@
 package com.firstgroup.gamemanagerapi.request;
 
-import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.stream.Stream;
 
 public record PublisherPatchRO (
-        Optional<String> name,
-        Optional<String> email,
-        Optional<String> description
-) {}
+       String name,
+       String email,
+       String description
+) {
+    public boolean isEmpty() {
+        return Stream.of(name, email, description).allMatch(StringUtils::isEmpty);
+    }
+}
