@@ -27,8 +27,6 @@ public class UserService {
 
     @Transactional
     public UserDTO createUser(@Valid UserRO ro) {
-        log.info("Creating user with display name: {}", ro.displayName());
-
         User user = userMapper.toEntity(ro);
         user.setPassword(ro.password());
 
@@ -59,6 +57,10 @@ public class UserService {
     public UserDTO patchUser(Long id, @Valid UserPatchRO ro) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist."));
+
+        if (ro.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
+        }
 
         if (ro.displayName() != null && !ro.displayName().equals(user.getDisplayName())) {
             if (userRepository.existsByDisplayName(ro.displayName())) {

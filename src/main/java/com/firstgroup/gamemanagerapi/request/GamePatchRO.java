@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 public record GamePatchRO(
         String title,
+        String description,
         LocalDate releaseDate,
         long publisherId,
         long developerId

@@ -24,5 +24,6 @@ public interface UserGameMapper {
     @Mapping(target = "hoursPlayed", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "game", ignore = true)
+    @Mapping(source = "isFavorite", target = "isFavorite")
     void updateFromUserGameRO(UserGamePatchRO ro, @MappingTarget UserGame entity);
 }

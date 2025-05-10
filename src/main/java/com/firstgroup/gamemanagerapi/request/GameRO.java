@@ -3,7 +3,6 @@ package com.firstgroup.gamemanagerapi.request;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public record GameRO(
         @NotBlank(message = "Title must not be blank.")

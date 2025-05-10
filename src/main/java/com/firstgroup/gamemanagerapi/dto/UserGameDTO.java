@@ -17,6 +17,7 @@ public class UserGameDTO {
     private long id;
     private LocalDateTime purchasedAt;
     private int hoursPlayed;
+    boolean isFavorite;
     private User user;
     private Game game;
 }
