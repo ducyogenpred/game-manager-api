@@ -7,11 +7,8 @@ import java.util.Optional;
 
 @Repository
 public interface PublisherRepository extends JpaRepository<Publisher, Long> {
+    boolean existsByName(String name);
     boolean existsByEmail (String email);
-    boolean existsByName (String name);
-
     Optional<Publisher> findByName (String name);
-
+    Optional<Publisher> findByEmail(String email);
 }
-
-
