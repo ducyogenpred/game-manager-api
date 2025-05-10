@@ -10,8 +10,13 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor()
 public class DeveloperService {
@@ -26,15 +31,13 @@ public class DeveloperService {
         }
 
         Developer developer = developerMapper.toEntity(ro);
-        return developerMapper.toDto(developerRepository.save(developer));
+        try {
+            Developer savedDeveloper = developerRepository.save(developer);
+            return developerMapper.toDto(savedDeveloper);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Developer with this name or email already exists.");
+        }
     }
-
-//    public List<DeveloperDTO> getAllDevelopers() {
-//        return developerRepository.findAll()
-//                .stream()
-//                .map(developerMapper::toDto)
-//                .toList();
-//    }
 
     public DeveloperDTO getDeveloperById(Long id) {
         Developer developer = developerRepository.findById(id)
@@ -49,33 +52,31 @@ public class DeveloperService {
     }
 
     @Transactional
-    public Developer patchDeveloper(Long id, @Valid DeveloperPatchRO ro) {
+    public DeveloperDTO patchDeveloper(Long id, @Valid DeveloperPatchRO ro) {
         Developer developer = developerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Developer not found!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Developer with this ID does not exist."));
 
-        if (ro.email().isPresent()) {
-            String email = ro.email().get();
-            if (developerRepository.existsByEmail(email)) {
-                throw new IllegalArgumentException("Developer with this display name already exists.");
-            }
-            developer.setEmail(email);
+        if (ro.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
         }
 
-        if (ro.name().isPresent()) {
-            String name = ro.name().get();
-            if (developerRepository.existsByName(name)) {
-                throw new IllegalArgumentException("Developer with this name already exists.");
+        if (ro.name() != null && !ro.name().equals(developer.getName())) {
+            if (developerRepository.existsByName(ro.name())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Developer with this name already exists.");
             }
-            developer.setName(name);
+            developer.setName(ro.name());
         }
 
-        ro.name().ifPresent(developer::setName);
-        ro.email().ifPresent(developer::setEmail);
-        ro.description().ifPresent(developer::setDescription);
+        if (ro.email() != null && !ro.email().equals(developer.getEmail())) {
+            if (developerRepository.existsByEmail(ro.email())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Developer with this email already exists.");
+            }
+            developer.setEmail(ro.email());
+        }
 
-        return developerRepository.save(developer);
+        developerMapper.updateDeveloperFromPatchRo(ro, developer);
+        return developerMapper.toDto(developerRepository.save(developer));
     }
-
     @Transactional
     public Long deleteDeveloper (long id){
         Developer developer = developerRepository.findById(id)
@@ -85,3 +86,7 @@ public class DeveloperService {
         return id;
     }
 }
+
+
+
+
