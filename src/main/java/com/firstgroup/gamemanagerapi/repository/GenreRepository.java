@@ -10,9 +10,11 @@ import java.util.Optional;
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Long>{
 
+    boolean existsByEmail(String email);
+    boolean existByName (String name);
     Optional<Genre> findByName(String name);
 
-    boolean existByName (String name);
+
 
     List <Genre> findByNameContainingIgnoreCase(String name);
     List<Genre> findAllByOrderByName();

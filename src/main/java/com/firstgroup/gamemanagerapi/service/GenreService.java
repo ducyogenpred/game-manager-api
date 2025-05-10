@@ -4,18 +4,21 @@ import com.firstgroup.gamemanagerapi.dto.GenreDTO;
 import com.firstgroup.gamemanagerapi.entity.Genre;
 import com.firstgroup.gamemanagerapi.mapper.GenreMapper;
 import com.firstgroup.gamemanagerapi.repository.GenreRepository;
+import com.firstgroup.gamemanagerapi.request.GenrePatchRO;
 import com.firstgroup.gamemanagerapi.request.GenreRO;
 import jakarta.persistence.EntityNotFoundException;
+import
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor (onConstructor_ = @Autowired)
+@RequiredArgsConstructor()
 public class GenreService {
 
     private final GenreRepository genreRepository;
@@ -36,7 +39,7 @@ public class GenreService {
                 .toList();
     }
 
-    public GenreDTO getGenreById (Long id){
+    public GenreDTO getGenreById(Long id){
         return genreMapper.toDto(genreRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Genre with id" + id + "already exist")));
     }
@@ -54,17 +57,21 @@ public class GenreService {
     }
 
     @Transactional
-    public GenreDTO updateGenre (Long id, @Valid GenreRO ro) {
+    public  GenreDTO patchGenre(Long id, @Valid GenrePatchRO ro) {
         Genre genre = genreRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Genre with id" + id + "already exist"));
-        if (!genre.getName().equals(ro.name()) &&
-                genreRepository.existByName(ro.name())) {
-            throw new IllegalArgumentException("Genre with name" + ro.name() + " already exist");
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist."));
+
+        if (ro.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
         }
 
-        genre.setName(ro.name());
-        genre.setDescription(ro.description());
-
+        if (ro.name() != null && !ro.name().equals(genre.getName())) {
+            if (GenreRepository.existsByName(ro.name())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this display name already exists.");
+            }
+            genre.setName(ro.name());
+        }
+        genreMapper.updateGenreFromPatchRo(ro, genre);
         return genreMapper.toDto(genreRepository.save(genre));
     }
 
