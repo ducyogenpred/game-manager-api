@@ -26,8 +26,7 @@ public class PublisherService {
         Publisher publisher = publisherMapper.toEntity(ro);
 
         try {
-            Publisher savedPublisher = publisherRepository.save(publisher);
-            return publisherMapper.toDto(savedPublisher);
+            return publisherMapper.toDto(publisherRepository.save(publisher));
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Publisher with this display name or email already exists.");
         }
