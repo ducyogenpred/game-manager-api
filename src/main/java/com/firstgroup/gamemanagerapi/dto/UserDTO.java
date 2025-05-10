@@ -1,13 +1,11 @@
 package com.firstgroup.gamemanagerapi.dto;
 
-import com.firstgroup.gamemanagerapi.entity.UserGame;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +21,6 @@ public class UserDTO {
     private String phoneNumber;
     private LocalDate birthDate;
     private String description;
+
+
 }
