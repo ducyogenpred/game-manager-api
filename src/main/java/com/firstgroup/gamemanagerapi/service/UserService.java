@@ -37,8 +37,7 @@ public class UserService {
         user.setPassword(ro.password());
 
         try {
-            User savedUser = userRepository.save(user);
-            return userMapper.toDto(savedUser);
+            return userMapper.toDto(userRepository.save(user));
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this display name or email already exists.");
         }

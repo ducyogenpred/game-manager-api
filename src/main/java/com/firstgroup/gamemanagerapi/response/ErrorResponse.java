@@ -17,5 +17,4 @@ public class ErrorResponse<T> {
     private int statusCode;
     private String message;
     private T data;
-
 }

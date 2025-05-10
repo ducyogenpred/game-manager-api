@@ -18,8 +18,7 @@ public class PublisherController {
 
     @PostMapping
     public ResponseEntity<PublisherDTO> createPublisher (@Valid @RequestBody PublisherRO ro) {
-        PublisherDTO createdUser = publisherService.createPublisher(ro);
-        return ResponseEntity.ok(createdUser);
+        return ResponseEntity.ok(publisherService.createPublisher(ro));
     }
 
     @GetMapping("/{id}")
