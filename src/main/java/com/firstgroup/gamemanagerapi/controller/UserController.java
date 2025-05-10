@@ -29,9 +29,19 @@ public class UserController {
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
                         MessageUtils.retrieveSuccessMessage(UserService.USERS),
-//                        userService.getAll(),
                         userService.createUser(ro)
         ));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USERS),
+                        userService.getAll()
+                )
+        );
     }
 
     @GetMapping("/{id}")

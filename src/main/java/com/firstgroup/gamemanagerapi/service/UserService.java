@@ -44,17 +44,17 @@ public class UserService {
         }
     }
 
-//    public List<UserDTO> getAll() {
-//        try {
-//            List<User> users = userRepository.findAll();
-//            log.info(MessageUtils.retrieveSuccessMessage(USERS));
-//            return users.stream().map(userMapper::toDto).toList();
-//        } catch (Exception e) {
-//            String errorMessage = MessageUtils.retrieveErrorMessage(USERS);
-//            log.error(errorMessage);
-//            throw new ServiceException(errorMessage, e);
-//        }
-//    }
+    public List<UserDTO> getAll() {
+        try {
+            List<User> users = userRepository.findAll();
+            log.info(MessageUtils.retrieveSuccessMessage(USERS));
+            return users.stream().map(userMapper::toDto).toList();
+        } catch (Exception e) {
+            String errorMessage = MessageUtils.retrieveErrorMessage(USERS);
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
+        }
+    }
 
     public UserDTO getUserById(long id) {
         return userMapper.toDto(userRepository.findById(id)
