@@ -18,7 +18,7 @@ public class PublisherController {
     private final PublisherService publisherService;
 
     @PostMapping
-    public ResponseEntity<PublisherDTO> createPublisher (@Valid @PathVariable PublisherRO ro) {
+    public ResponseEntity<PublisherDTO> createPublisher (@Valid @RequestBody PublisherRO ro) {
         PublisherDTO createdUser = publisherService.createPublisher(ro);
         return ResponseEntity.ok(createdUser);
     }
