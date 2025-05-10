@@ -3,7 +3,6 @@ package com.firstgroup.gamemanagerapi.controller;
 import com.firstgroup.gamemanagerapi.dto.PublisherDTO;
 import com.firstgroup.gamemanagerapi.request.PublisherRO;
 import com.firstgroup.gamemanagerapi.service.PublisherService;
-import com.firstgroup.gamemanagerapi.entity.Publisher;
 import com.firstgroup.gamemanagerapi.request.PublisherPatchRO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +33,13 @@ public class PublisherController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Publisher> patchPublisher (@PathVariable Long id, @Valid @RequestBody PublisherPatchRO ro) {
+    public ResponseEntity<PublisherDTO> patchPublisher (@PathVariable Long id, @Valid @RequestBody PublisherPatchRO ro) {
         return ResponseEntity.ok(publisherService.patchPublisher(id, ro));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deletePublisher(@PathVariable Long id) {
-        return ResponseEntity.ok(publisherService.deletePublisher(id));
+        publisherService.deletePublisher(id);
+        return ResponseEntity.noContent().build();
     }
 }
