@@ -28,11 +28,11 @@ public class Publisher {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "review_count", nullable = false)
-    private Integer reviewCount;
+    @Column(name = "review_count", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int reviewCount;
 
-    @Column(name = "rating_average", nullable = false)
-    private Double ratingAverage;
+    @Column(name = "rating_average", nullable = false, columnDefinition = "DOUBLE DEFAULT 0.0")
+    private double ratingAverage;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -40,7 +40,7 @@ public class Publisher {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @Builder.Default
     private Set<Game> games = new HashSet<>();

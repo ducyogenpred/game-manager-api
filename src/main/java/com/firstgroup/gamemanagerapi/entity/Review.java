@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,8 +27,8 @@ public class Review {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "rating", nullable = false)
-    private  Double rating;
+    @Column(name = "rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0.0")
+    private double rating;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

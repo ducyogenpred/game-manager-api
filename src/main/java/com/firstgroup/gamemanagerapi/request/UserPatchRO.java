@@ -1,16 +1,22 @@
 package com.firstgroup.gamemanagerapi.request;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public record UserPatchRO(
-        Optional<String> firstName,
-        Optional<String> middleName,
-        Optional<String> lastName,
-        Optional<String> displayName,
-        Optional<String> email,
-        Optional<String> phoneNumber,
-        Optional<String> password,
-        Optional<LocalDateTime> birthDate,
-        Optional<String> description
-) {}
+        String firstName,
+        String middleName,
+        String lastName,
+        String displayName,
+        String email,
+        String phoneNumber,
+        String password,
+        LocalDate birthDate,
+        String description
+) {
+    public boolean isEmpty() {
+        return Stream.of(firstName, middleName, lastName, displayName, email, phoneNumber, password, birthDate, description)
+                .allMatch(Objects::isNull);
+    }
+}

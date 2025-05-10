@@ -4,36 +4,25 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "favorites")
+@Table(name = "games_genres")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-public class Favorite {
+public class GameGenre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    @JsonBackReference
+    private Genre genre;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "game_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "game_id")
     private Game game;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 }
