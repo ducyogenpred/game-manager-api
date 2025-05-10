@@ -10,10 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor()
@@ -39,20 +36,20 @@ public class DeveloperService {
 //                .toList();
 //    }
 
-    public DeveloperDTO getDevelopersById(Long id) {
+    public DeveloperDTO getDeveloperById(Long id) {
         Developer developer = developerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Developer with id" + id + "already exists"));
         return developerMapper.toDto(developer);
     }
 
-    public DeveloperDTO getDevelopersByName(String name) {
+    public DeveloperDTO getDeveloperByName(String name) {
         Developer developer = developerRepository.findByName(name)
                 .orElseThrow(() -> new EntityNotFoundException("Developer with name" + name + "already exists"));
         return developerMapper.toDto(developer);
     }
 
     @Transactional
-    public Developer patchDevelopers(Long id, @Valid DeveloperPatchRO ro) {
+    public Developer patchDeveloper(Long id, @Valid DeveloperPatchRO ro) {
         Developer developer = developerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Developer not found!"));
 
@@ -80,11 +77,11 @@ public class DeveloperService {
     }
 
     @Transactional
-    public Developer deleteDeveloper (long id){
+    public Long deleteDeveloper (long id){
         Developer developer = developerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Developer with id" + id + "already exists"));
 
         developerRepository.delete(developer);
-        return developer;
+        return id;
     }
 }
