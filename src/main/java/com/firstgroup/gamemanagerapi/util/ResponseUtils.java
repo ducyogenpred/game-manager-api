@@ -1,8 +1,11 @@
 package com.firstgroup.gamemanagerapi.util;
 
+import com.firstgroup.gamemanagerapi.dto.UserDTO;
 import com.firstgroup.gamemanagerapi.response.ErrorResponse;
 import com.firstgroup.gamemanagerapi.response.SuccessResponse;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 public class ResponseUtils {
 
@@ -38,5 +41,9 @@ public class ResponseUtils {
         response.setData(data);
 
         return response;
+    }
+
+    public static Object buildSuccessResponse(HttpStatus httpStatus, String s, List<UserDTO> all, UserDTO user) {
+        return null;
     }
 }
