@@ -9,7 +9,6 @@ public interface DeveloperRepository extends JpaRepository<Developer, Long> {
 
     boolean existsByEmail(String email);
     boolean existsByName(String name);
-
+    Optional<Developer> findByEmail(String email);
     Optional<Developer> findByName(String name);
-
 }
