@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -36,7 +37,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         log.info("Fetching user with ID: {}", id);
-        return ResponseEntity.ok(userService.getUserById(id));
+        try {
+            return ResponseEntity.ok(userService.getUserById(id));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
+        }
     }
 
     @GetMapping("/display-name/{displayName}")
