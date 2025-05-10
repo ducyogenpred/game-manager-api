@@ -4,9 +4,11 @@ import com.firstgroup.gamemanagerapi.dto.UserDTO;
 import com.firstgroup.gamemanagerapi.request.UserPatchRO;
 import com.firstgroup.gamemanagerapi.request.UserRO;
 import com.firstgroup.gamemanagerapi.service.UserService;
+import com.firstgroup.gamemanagerapi.util.ResponseUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserRO ro) {
         log.info("Creating user with display name: {}", ro.displayName());
-        return ResponseEntity.ok(userService.createUser(ro));
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USERS),
+                        userService.getAll()
+                userService.createUser(ro)
+        );
     }
 
     @GetMapping("/{id}")
