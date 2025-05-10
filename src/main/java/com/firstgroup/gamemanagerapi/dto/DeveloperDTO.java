@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class DeveloperDTO {
     private long id;
@@ -20,4 +19,15 @@ public class DeveloperDTO {
     private double ratingAverage;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public DeveloperDTO(long id, String name, String email, String description, int reviewCount, double ratingAverage, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.description = description;
+        this.reviewCount = reviewCount;
+        this.ratingAverage = ratingAverage;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

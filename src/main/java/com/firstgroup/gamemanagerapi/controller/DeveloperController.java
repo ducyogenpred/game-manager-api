@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/developers")
+@RequestMapping("/developers")
 @RequiredArgsConstructor
 public class DeveloperController {
 
@@ -36,7 +36,7 @@ public class DeveloperController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Developer> patchDeveloper (@PathVariable Long id, @Valid @RequestBody DeveloperPatchRO ro) {
+    public ResponseEntity<DeveloperDTO> patchDeveloper (@PathVariable Long id, @Valid @RequestBody DeveloperPatchRO ro) {
         return ResponseEntity.ok(developerService.patchDeveloper(id, ro));
     }
 
