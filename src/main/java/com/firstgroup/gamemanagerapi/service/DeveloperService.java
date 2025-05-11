@@ -49,12 +49,12 @@ public class DeveloperService {
 
     @Transactional
     public DeveloperDTO patchDeveloper(Long id, @Valid DeveloperPatchRO ro) {
+        Developer developer = developerRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Developer with this ID does not exist."));
+
         if (ro.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
         }
-
-        Developer developer = developerRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Developer with this ID does not exist."));
 
         if (ro.name() != null && !ro.name().equals(developer.getName())) {
             if (developerRepository.existsByName(ro.name())) {

@@ -49,12 +49,12 @@ public class PublisherService {
 
     @Transactional
     public PublisherDTO patchPublisher(Long id, @Valid PublisherPatchRO ro) {
+        Publisher publisher = publisherRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this ID does not exist."));
+
         if (ro.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
         }
-
-        Publisher publisher = publisherRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this ID does not exist."));
 
         if (ro.name() != null && !ro.name().equals(publisher.getName())) {
             if (publisherRepository.existsByName((ro.name()))) {
