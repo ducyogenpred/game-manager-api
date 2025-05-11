@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record PublisherRO(
         @NotBlank(message = "Publisher name must not be blank.")
+        @Pattern(regexp = "^\\S.*$", message = "Publisher name must not start with a space.")
         String name,
 
         @Pattern(regexp = "^\\S.*$", message = "Description must not start with a space.")
