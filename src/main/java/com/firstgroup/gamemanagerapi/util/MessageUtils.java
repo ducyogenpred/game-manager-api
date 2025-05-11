@@ -21,6 +21,10 @@ public class MessageUtils {
 
     public static final String SAVE_EXCEPTION_MESSAGE = "Failed to save record: {}";
 
+    public static final String UPDATE_SUCCESS_MESSAGE = "Successfully updated %s.";
+
+    public static final String UPDATE_ERROR_MESSAGE = "Failed to update %s.";
+
     public static final String UPDATE_POSTED_STATUS_SUCCESS_MESSAGE = "Successfully updated %s posted status.";
 
     public static final String UPDATE_POSTED_STATUS_ERROR_MESSAGE = "Failed to update %s posted status.";
@@ -53,6 +57,21 @@ public class MessageUtils {
      * @param value the value
      * @return the string
      */
+
+    public static String updateSuccessMessage(String value) {
+        return String.format(UPDATE_SUCCESS_MESSAGE, value);
+    }
+    /**
+     * Retrieve success message string.
+     *
+     * @param value the value
+     * @return the string
+     */
+
+    public static String updateErrorMessage(String value) {
+        return String.format(UPDATE_ERROR_MESSAGE, value);
+    }
+
     public static String retrieveSuccessMessage(String value) {
         return String.format(RETRIEVE_SUCCESS_MESSAGE, value);
     }

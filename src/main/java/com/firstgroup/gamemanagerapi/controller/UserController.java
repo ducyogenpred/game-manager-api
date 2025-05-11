@@ -77,10 +77,18 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDTO> patchUser(@PathVariable Long id, @Valid @RequestBody UserPatchRO ro) {
-        log.info("Updating user with ID: {}", id);
-        return ResponseEntity.ok(userService.patchUser(id, ro));
+    public ResponseEntity<?> patchUser(@PathVariable Long id, @Valid @RequestBody UserPatchRO ro) {
+        log.info("Patching user with ID: {}", id);
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.updateSuccessMessage(UserService.USER),
+                        userService.patchUser(id, ro)
+                )
+        );
     }
+//        log.info("Updating user with ID: {}", id);
+//        return ResponseEntity.ok(userService.patchUser(id, ro));
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {

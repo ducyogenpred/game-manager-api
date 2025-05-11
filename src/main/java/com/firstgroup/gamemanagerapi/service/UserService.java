@@ -14,10 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -136,29 +135,30 @@ public class UserService {
 
     @Transactional
     public UserDTO patchUser(Long id, @Valid UserPatchRO ro) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist."));
+        try {
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
-        if (ro.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
+            if (ro.firstName() != null) user.setFirstName(ro.firstName());
+            if (ro.middleName() != null) user.setMiddleName(ro.middleName());
+            if (ro.lastName() != null) user.setLastName(ro.lastName());
+            if (ro.displayName() != null) user.setDisplayName(ro.displayName());
+            if (ro.email() != null) user.setEmail(ro.email());
+            if (ro.phoneNumber() != null) user.setPhoneNumber(ro.phoneNumber());
+            if (ro.password() != null) user.setPassword(ro.password());
+            if (ro.birthDate() != null) user.setBirthDate(ro.birthDate());
+            if (ro.description() != null) user.setDescription(ro.description());
+
+            user.setUpdatedAt(LocalDateTime.now());
+
+            log.info(MessageUtils.updateSuccessMessage(USER));
+            return userMapper.toDto(userRepository.save(user));
+
+        } catch (Exception e) {
+            String errorMessage = MessageUtils.updateErrorMessage(USER);
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
         }
-
-        if (ro.displayName() != null && !ro.displayName().equals(user.getDisplayName())) {
-            if (userRepository.existsByDisplayName(ro.displayName())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this display name already exists.");
-            }
-            user.setDisplayName(ro.displayName());
-        }
-
-        if (ro.email() != null && !ro.email().equals(user.getEmail())) {
-            if (userRepository.existsByEmail(ro.email())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this email already exists.");
-            }
-            user.setEmail(ro.email());
-        }
-
-        userMapper.updateUserFromPatchRo(ro, user);
-        return userMapper.toDto(userRepository.save(user));
     }
 
     @Transactional
