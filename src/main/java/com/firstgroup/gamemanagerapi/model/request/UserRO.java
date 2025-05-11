@@ -25,7 +25,7 @@ public record UserRO(
         String displayName,
 
         @NotBlank(message = "Email must not be blank.")
-        @Email(message = "Invalid email format.")
+        @Email(message = "Email must be a valid email address.")
         String email,
 
         @NotBlank(message = "Phone number must not be blank.")

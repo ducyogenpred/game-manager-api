@@ -24,7 +24,7 @@ public record UserPatchRO(
         @Pattern(regexp = "^\\S.*$", message = "Display name must not start with a space.")
         String displayName,
 
-        @Email(message = "Invalid email format.")
+        @Email(message = "Email must be a valid email address.")
         String email,
 
         @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Phone number must have 10-15 digits.")
