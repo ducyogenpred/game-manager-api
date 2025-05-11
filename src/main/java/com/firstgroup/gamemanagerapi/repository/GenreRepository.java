@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface GenreRepository extends JpaRepository<Genre, Long>{
 
     boolean existsByEmail(String email);
-    boolean existByName (String name);
+    boolean existsByName(String name);
     Optional<Genre> findByName(String name);
 
 

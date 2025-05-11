@@ -7,10 +7,10 @@ import com.firstgroup.gamemanagerapi.repository.GenreRepository;
 import com.firstgroup.gamemanagerapi.request.GenrePatchRO;
 import com.firstgroup.gamemanagerapi.request.GenreRO;
 import jakarta.persistence.EntityNotFoundException;
-import
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,7 +26,7 @@ public class GenreService {
 
     @Transactional
     public GenreDTO createGenre (@Valid GenreRO ro){
-        if (genreRepository.existByName(ro.name())){
+        if (genreRepository.existsByName(ro.name())){
             throw new IllegalArgumentException("Genre name already exist!");
         }
         Genre genre = genreMapper.toEntity(ro);
@@ -59,17 +59,18 @@ public class GenreService {
     @Transactional
     public  GenreDTO patchGenre(Long id, @Valid GenrePatchRO ro) {
         Genre genre = genreRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre with this ID does not exist."));
 
         if (ro.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
         }
 
         if (ro.name() != null && !ro.name().equals(genre.getName())) {
-            if (GenreRepository.existsByName(ro.name())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this display name already exists.");
+            if (!genreRepository.existsByName(ro.name())) {
+                genre.setName(ro.name());
+            } else {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Genre with this display name already exists.");
             }
-            genre.setName(ro.name());
         }
         genreMapper.updateGenreFromPatchRo(ro, genre);
         return genreMapper.toDto(genreRepository.save(genre));

@@ -27,7 +27,7 @@ public class GenreController {
 
     @PostMapping
     public ResponseEntity<GenreDTO> createGenre (@Valid @RequestBody GenreRO ro) {
-        log.info("Creating  with display name: {}", ro.displayName());
+        log.info("Creating genre with this name: {}", ro.name());
         return ResponseEntity.ok(genreService.createGenre(ro));
     }
 
@@ -38,14 +38,14 @@ public class GenreController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<GenreDTO> patchGenre(@PathVariable Long id, @Valid @RequestBody GenrePatchRO ro) {
-        log.info("Updating user with ID: {}", id);
+        log.info("Updating genre with ID: {}", id);
         return ResponseEntity.ok(genreService.patchGenre(id, ro));
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGenre(@PathVariable Long id) {
-        log.info("Deleting user with ID: {}", id);
+        log.info("Deleting genre with ID: {}", id);
         genreService.deleteGenre(id);
         return ResponseEntity.noContent().build();
     }
