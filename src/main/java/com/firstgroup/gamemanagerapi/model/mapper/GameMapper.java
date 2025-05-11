@@ -15,8 +15,8 @@ public interface GameMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @Mapping(target = "users", ignore = true)
-    @Mapping(source = "developerId", target = "developer")
-    @Mapping(source = "publisherId", target = "publisher")
+    /*@Mapping(source = "developerId", target = "developer")
+    @Mapping(source = "publisherId", target = "publisher")*/
     Game toEntity(GameRO ro);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -25,8 +25,8 @@ public interface GameMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @Mapping(target = "users", ignore = true)
-    @Mapping(source = "developerId", target = "developer")
-    @Mapping(source = "publisherId", target = "publisher")
+    /*@Mapping(source = "developerId", target = "developer")
+    @Mapping(source = "publisherId", target = "publisher")*/
     void updateFromGamePatchRO(GamePatchRO ro, @MappingTarget Game entity);
 
     /*@AfterMapping
