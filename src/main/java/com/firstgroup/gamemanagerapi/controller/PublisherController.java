@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.dto.PublisherDTO;
-import com.firstgroup.gamemanagerapi.request.PublisherRO;
+import com.firstgroup.gamemanagerapi.model.dto.PublisherDTO;
+import com.firstgroup.gamemanagerapi.model.request.PublisherRO;
 import com.firstgroup.gamemanagerapi.service.PublisherService;
-import com.firstgroup.gamemanagerapi.request.PublisherPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.PublisherPatchRO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

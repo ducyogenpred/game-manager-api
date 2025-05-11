@@ -1,6 +1,6 @@
 package com.firstgroup.gamemanagerapi.repository;
 
-import com.firstgroup.gamemanagerapi.entity.Developer;
+import com.firstgroup.gamemanagerapi.model.entity.Developer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
