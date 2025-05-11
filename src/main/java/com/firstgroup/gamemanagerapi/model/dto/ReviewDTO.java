@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReviewDTO {
     private long id;
-    private String header;
+    private String title;
     private String content;
     private  Double rating;
     private User user;
