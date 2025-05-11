@@ -54,7 +54,7 @@ public class UserController {
         );
     }
 
-    @GetMapping("/displayname/{displayName}")
+    @GetMapping("/display-name/{displayName}")
     public ResponseEntity<?> getUserByDisplayName(@PathVariable String displayName) {
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
