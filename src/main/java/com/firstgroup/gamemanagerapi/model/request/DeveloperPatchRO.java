@@ -1,15 +1,21 @@
 package com.firstgroup.gamemanagerapi.model.request;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.stream.Stream;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public record DeveloperPatchRO (
-    String name,
-    String email,
-    String description
-        ) {
+        @NotBlank(message = "Developer name must not be blank.")
+        String name,
+
+        @Pattern(regexp = "^\\S.*$", message = "Description must not start with a space.")
+        String description,
+
+        @NotBlank(message = "Email must not be blank.")
+        @Email(message = "Email must be a valid email address.")
+        String email
+) {
     public boolean isEmpty() {
-        return Stream.of(name, email, description).allMatch(StringUtils::isEmpty);
+        return name == null && description == null && email == null;
     }
 }
