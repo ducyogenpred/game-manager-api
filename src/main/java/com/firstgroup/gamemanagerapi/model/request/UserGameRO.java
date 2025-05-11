@@ -11,13 +11,13 @@ public record UserGameRO(
         @PastOrPresent(message = "Purchased date must be set in the past or present.")
         LocalDateTime purchaseAt,
 
-        boolean isFavorite,
+        Boolean isFavorite,
 
         @NotNull(message = "User ID is required.")
         @Positive(message = "User ID must be positive.")
-        long userId,
+        Long userId,
 
         @NotNull(message = "Game ID is required.")
         @Positive(message = "Game ID must be positive.")
-        long gameId
+        Long gameId
 ) {}

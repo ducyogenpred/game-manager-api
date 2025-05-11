@@ -1,16 +1,15 @@
 package com.firstgroup.gamemanagerapi.model.request;
 
+import jakarta.validation.constraints.PastOrPresent;
+
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 public record UserGamePatchRO(
+        @PastOrPresent(message = "Purchase date must be in the past or present.")
         LocalDateTime purchaseAt,
-        boolean isFavorite,
-        long userId,
-        long gameId
+        Boolean isFavorite
 ) {
     public boolean isEmpty() {
-        return Stream.of(purchaseAt, isFavorite, userId, gameId).allMatch(Objects::isNull);
+        return purchaseAt == null && isFavorite == null;
     }
 }
