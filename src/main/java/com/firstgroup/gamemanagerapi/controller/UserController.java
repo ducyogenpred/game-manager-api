@@ -1,6 +1,7 @@
 package com.firstgroup.gamemanagerapi.controller;
 
 import com.firstgroup.gamemanagerapi.dto.UserDTO;
+import com.firstgroup.gamemanagerapi.entity.User;
 import com.firstgroup.gamemanagerapi.request.UserPatchRO;
 import com.firstgroup.gamemanagerapi.request.UserRO;
 import com.firstgroup.gamemanagerapi.service.UserService;
@@ -12,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -45,14 +45,35 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        log.info("Fetching user with ID: {}", id);
-        try {
-            return ResponseEntity.ok(userService.getUserById(id));
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
-        }
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USER),
+                        userService.getUserById(id)
+                )
+        );
     }
+//        log.info("Fetching user with ID: {}", id);
+//        try {
+//            User user = userService.getUserById(id); // this may throw
+//            return ResponseEntity.ok(
+//                    ResponseUtils.buildSuccessResponse(
+//                            HttpStatus.OK,
+//                            MessageUtils.retrieveSuccessMessage(UserService.USER),
+//                            user
+//                    )
+//            );
+//        } catch (Exception e) {
+////            log.error("Error fetching user: {}", e.getMessage());
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+//                    ResponseUtils.buildErrorResponse(
+//                            HttpStatus.NOT_FOUND,
+//                            MessageUtils.retrieveErrorMessage(UserService.USER)
+//                    )
+//            );
+//        }
+
 
     @GetMapping("/display-name/{displayName}")
     public ResponseEntity<UserDTO> getUserByDisplayName(@PathVariable String displayName) {

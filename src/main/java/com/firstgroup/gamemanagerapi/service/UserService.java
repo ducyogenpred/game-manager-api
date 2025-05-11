@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -56,10 +58,33 @@ public class UserService {
         }
     }
 
-    public UserDTO getUserById(long id) {
-        return userMapper.toDto(userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist.")));
+    public Optional<User> getById(Long id) {
+        if (Objects.isNull(id)) {
+            return Optional.empty();
+        }
+
+        return userRepository.findById(id);
     }
+
+    public User getUserById(Long id) {
+        try {
+            Optional<User> user = getById(id);
+
+            if (user.isEmpty()) {
+                throw new Exception("User not found.");
+            }
+            log.info(MessageUtils.retrieveSuccessMessage(USER));
+            return user.get();
+        } catch (Exception e) {
+            String errorMessage = MessageUtils.retrieveErrorMessage(USER);
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
+        }
+    }
+//    public User getUserById(Long id) {
+//        return getById(id)
+//                .orElseThrow(() -> new RuntimeException(MessageUtils.retrieveErrorMessage(USER)));
+//    }
 
     public UserDTO getUserByDisplayName(String displayName) {
         return userMapper.toDto(userRepository.findByDisplayName(displayName)
