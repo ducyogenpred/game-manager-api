@@ -6,37 +6,41 @@ import java.time.LocalDate;
 
 public record UserRO(
         @NotBlank(message = "First name must not be blank.")
-        @Pattern(regexp = "[A-Za-z]+", message = "First name should only contain letters.")
+        @Pattern(regexp = "^\\p{IsAlphabetic}(?:[\\p{IsAlphabetic} '-]*|(?: \\p{IsAlphabetic}[\\p{IsAlphabetic} '-]*)*)(?<! )$",
+                message = "First name must start with a letter and may contain letters, spaces, hyphens, or apostrophes.")
         String firstName,
 
-        @Pattern(regexp = "[A-Za-z]+", message = "Middle name should only contain letters.")
+        @Pattern(regexp = "^\\p{IsAlphabetic}(?:[\\p{IsAlphabetic} '-]*|(?: \\p{IsAlphabetic}[\\p{IsAlphabetic} '-]*)*)(?<! )$",
+                message = "Middle name must start with a letter and may contain letters, spaces, hyphens, or apostrophes.")
         String middleName,
 
         @NotBlank(message = "Last name must not be blank.")
-        @Pattern(regexp = "[A-Za-z]+", message = "Last name should only contain letters.")
+        @Pattern(regexp = "^\\p{IsAlphabetic}(?:[\\p{IsAlphabetic} '-]*|(?: \\p{IsAlphabetic}[\\p{IsAlphabetic} '-]*)*)(?<! )$",
+                message = "Last name must start with a letter and may contain letters, spaces, hyphens, or apostrophes.")
         String lastName,
 
         @NotBlank(message = "Display name must not be blank.")
         @Size(min = 4, message = "Display name must have at least 4 characters.")
+        @Pattern(regexp = "^\\S.*$", message = "Display name must not start with a space.")
         String displayName,
 
         @NotBlank(message = "Email must not be blank.")
-        @Email
+        @Email(message = "Invalid email format.")
         String email,
 
         @NotBlank(message = "Phone number must not be blank.")
-        @Pattern(regexp = "\\+?[0-9]{10,15}",
-                message = "Phone number must have exactly 10 digits.")
+        @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Phone number must have 10-15 digits.")
         String phoneNumber,
 
         @NotBlank(message = "Password must not be blank.")
-        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=\\S+$).{8,}",
-                message = "Password must have at least one digit, one lowercase letter, one uppercase letter, and one special character.")
+        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}",
+                message = "Password must include 1 digit, 1 lowercase, 1 uppercase, and 1 special character.")
         String password,
 
         @NotNull(message = "Birthdate is required.")
         @Past(message = "Birthdate must be in the past.")
         LocalDate birthDate,
 
+        @Pattern(regexp = "^\\S.*$", message = "Description must not start with a space.")
         String description
 ) {}
