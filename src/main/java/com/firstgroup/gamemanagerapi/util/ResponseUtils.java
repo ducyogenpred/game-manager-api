@@ -43,11 +43,7 @@ public class ResponseUtils {
         return response;
     }
 
-//    public static Object buildSuccessResponse(HttpStatus httpStatus, String s, List<UserDTO> all, UserDTO user) {
-//        return null;
-//    }
-//
-//    public static Object buildErrorResponse(HttpStatus httpStatus, String s, List<UserDTO> all, UserDTO user) {
-//        return null;
-//    }
+    public static Object buildSuccessResponse(HttpStatus httpStatus, String s, List<UserDTO> all, UserDTO user) {
+        return null;
+    }
 }
