@@ -21,4 +21,6 @@ public class UserDTO {
     private String phoneNumber;
     private LocalDate birthDate;
     private String description;
+
+
 }

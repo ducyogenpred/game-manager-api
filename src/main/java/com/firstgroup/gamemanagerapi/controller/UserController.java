@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -45,25 +44,36 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        log.info("Fetching user with ID: {}", id);
-        try {
-            return ResponseEntity.ok(userService.getUserById(id));
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
-        }
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USER),
+                        userService.getUserById(id)
+                )
+        );
     }
 
-    @GetMapping("/display-name/{displayName}")
-    public ResponseEntity<UserDTO> getUserByDisplayName(@PathVariable String displayName) {
-        log.info("Fetching user with display name: {}", displayName);
-        return ResponseEntity.ok(userService.getUserByDisplayName(displayName));
+    @GetMapping("/displayname/{displayName}")
+    public ResponseEntity<?> getUserByDisplayName(@PathVariable String displayName) {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USER),
+                        userService.getUserByDisplayName(displayName)
+                )
+        );
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
-        log.info("Fetching user with email: {}", email);
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USER),
+                        userService.getUserByEmail(email)
+                )
+        );
     }
 
     @PatchMapping("/{id}")
@@ -73,9 +83,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         log.info("Deleting user with ID: {}", id);
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.deleteSuccessMessage(UserService.USER)
+                )
+        );
     }
 }
