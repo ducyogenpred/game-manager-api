@@ -3,6 +3,6 @@ package com.firstgroup.gamemanagerapi.exception;
 public class ServiceException extends RuntimeException {
 
     public ServiceException(String message, Throwable cause) {
-        super(message);
+        super(message, cause);
     }
 }

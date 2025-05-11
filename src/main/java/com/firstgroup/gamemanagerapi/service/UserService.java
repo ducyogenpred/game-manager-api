@@ -33,15 +33,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+
     @Transactional
     public UserDTO createUser(@Valid UserRO ro) {
-        User user = userMapper.toEntity(ro);
-        user.setPassword(ro.password());
-
         try {
-            return userMapper.toDto(userRepository.save(user));
-        } catch (DataIntegrityViolationException ex) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this display name or email already exists.");
+            User user = userMapper.toEntity(ro);
+            user.setPassword(ro.password());
+
+            User savedUser = userRepository.save(user);
+            log.info(MessageUtils.saveSuccessMessage(USER));
+
+            return userMapper.toDto(savedUser);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(MessageUtils.saveErrorMessage(USER));
         }
     }
 
@@ -65,6 +69,22 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<User> getByEmail(String email) {
+        if (Objects.isNull(email)) {
+            return Optional.empty();
+        }
+
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> getByDisplayName(String displayName) {
+        if (Objects.isNull(displayName)) {
+            return Optional.empty();
+        }
+
+        return userRepository.findByDisplayName(displayName);
+    }
+
     public User getUserById(Long id) {
         try {
             Optional<User> user = getById(id);
@@ -80,20 +100,49 @@ public class UserService {
             throw new ServiceException(errorMessage, e);
         }
     }
-//    public User getUserById(Long id) {
-//        return getById(id)
-//                .orElseThrow(() -> new RuntimeException(MessageUtils.retrieveErrorMessage(USER)));
+
+    public User getUserByEmail(String email) {
+        try {
+            Optional<User> user = getByEmail(email);
+
+            if (user.isEmpty()) {
+                throw new Exception("User not found.");
+            }
+            log.info(MessageUtils.retrieveSuccessMessage(USER));
+            return user.get();
+        } catch (Exception e) {
+            String errorMessage = MessageUtils.retrieveErrorMessage(USER);
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
+        }
+    }
+
+    public User getUserByDisplayName(String displayName) {
+        try {
+            Optional<User> user = getByDisplayName(displayName);
+
+            if (user.isEmpty()) {
+                throw new Exception("User not found.");
+            }
+            log.info(MessageUtils.retrieveSuccessMessage(USER));
+            return user.get();
+        } catch (Exception e) {
+            String errorMessage = MessageUtils.retrieveErrorMessage(USER);
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
+        }
+    }
+
+
+//    public UserDTO getUserByDisplayName(String displayName) {
+//        return userMapper.toDto(userRepository.findByDisplayName(displayName)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this display name does not exist.")));
 //    }
 
-    public UserDTO getUserByDisplayName(String displayName) {
-        return userMapper.toDto(userRepository.findByDisplayName(displayName)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this display name does not exist.")));
-    }
-
-    public UserDTO getUserByEmail(String email) {
-        return userMapper.toDto(userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this email does not exist.")));
-    }
+//    public UserDTO getUserByEmail(String email) {
+//        return userMapper.toDto(userRepository.findByEmail(email)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this email does not exist.")));
+//    }
 
     @Transactional
     public UserDTO patchUser(Long id, @Valid UserPatchRO ro) {

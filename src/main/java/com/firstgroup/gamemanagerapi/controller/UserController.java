@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.entity.User;
-import com.firstgroup.gamemanagerapi.request.UserPatchRO;
-import com.firstgroup.gamemanagerapi.request.UserRO;
+import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
+import com.firstgroup.gamemanagerapi.model.entity.User;
+import com.firstgroup.gamemanagerapi.model.request.UserPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.UserRO;
 import com.firstgroup.gamemanagerapi.service.UserService;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import com.firstgroup.gamemanagerapi.util.ResponseUtils;
@@ -54,37 +54,27 @@ public class UserController {
                 )
         );
     }
-//        log.info("Fetching user with ID: {}", id);
-//        try {
-//            User user = userService.getUserById(id); // this may throw
-//            return ResponseEntity.ok(
-//                    ResponseUtils.buildSuccessResponse(
-//                            HttpStatus.OK,
-//                            MessageUtils.retrieveSuccessMessage(UserService.USER),
-//                            user
-//                    )
-//            );
-//        } catch (Exception e) {
-////            log.error("Error fetching user: {}", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                    ResponseUtils.buildErrorResponse(
-//                            HttpStatus.NOT_FOUND,
-//                            MessageUtils.retrieveErrorMessage(UserService.USER)
-//                    )
-//            );
-//        }
 
-
-    @GetMapping("/display-name/{displayName}")
-    public ResponseEntity<UserDTO> getUserByDisplayName(@PathVariable String displayName) {
-        log.info("Fetching user with display name: {}", displayName);
-        return ResponseEntity.ok(userService.getUserByDisplayName(displayName));
+    @GetMapping("/displayname/{displayName}")
+    public ResponseEntity<?> getUserByDisplayName(@PathVariable String displayName) {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USER),
+                        userService.getUserByDisplayName(displayName)
+                )
+        );
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
-        log.info("Fetching user with email: {}", email);
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(
+                ResponseUtils.buildSuccessResponse(
+                        HttpStatus.OK,
+                        MessageUtils.retrieveSuccessMessage(UserService.USER),
+                        userService.getUserByEmail(email)
+                )
+        );
     }
 
     @PatchMapping("/{id}")
