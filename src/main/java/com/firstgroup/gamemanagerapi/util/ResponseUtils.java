@@ -1,8 +1,8 @@
 package com.firstgroup.gamemanagerapi.util;
 
-import com.firstgroup.gamemanagerapi.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.response.ErrorResponse;
-import com.firstgroup.gamemanagerapi.response.SuccessResponse;
+import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
+import com.firstgroup.gamemanagerapi.model.response.ErrorResponse;
+import com.firstgroup.gamemanagerapi.model.response.SuccessResponse;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;

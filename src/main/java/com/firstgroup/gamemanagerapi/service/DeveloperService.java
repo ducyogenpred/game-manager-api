@@ -1,11 +1,11 @@
 package com.firstgroup.gamemanagerapi.service;
 
-import com.firstgroup.gamemanagerapi.dto.DeveloperDTO;
-import com.firstgroup.gamemanagerapi.entity.Developer;
-import com.firstgroup.gamemanagerapi.mapper.DeveloperMapper;
+import com.firstgroup.gamemanagerapi.model.dto.DeveloperDTO;
+import com.firstgroup.gamemanagerapi.model.entity.Developer;
+import com.firstgroup.gamemanagerapi.model.mapper.DeveloperMapper;
 import com.firstgroup.gamemanagerapi.repository.DeveloperRepository;
-import com.firstgroup.gamemanagerapi.request.DeveloperPatchRO;
-import com.firstgroup.gamemanagerapi.request.DeveloperRO;
+import com.firstgroup.gamemanagerapi.model.request.DeveloperPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.DeveloperRO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
