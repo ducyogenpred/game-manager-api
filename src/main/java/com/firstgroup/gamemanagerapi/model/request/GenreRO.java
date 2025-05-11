@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record GenreRO(
+        @Pattern(regexp = "^\\S.*$", message = "Genre name must not start with a space.")
         @NotBlank(message = "Genre name must not be blank.")
         String name,
 
