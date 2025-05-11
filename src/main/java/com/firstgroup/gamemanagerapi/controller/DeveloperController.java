@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.dto.DeveloperDTO;
-import com.firstgroup.gamemanagerapi.request.DeveloperRO;
+import com.firstgroup.gamemanagerapi.model.dto.DeveloperDTO;
+import com.firstgroup.gamemanagerapi.model.request.DeveloperRO;
 import com.firstgroup.gamemanagerapi.service.DeveloperService;
-import com.firstgroup.gamemanagerapi.request.DeveloperPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.DeveloperPatchRO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +39,7 @@ public class DeveloperController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteDeveloper (@PathVariable Long id) {
-        return ResponseEntity.ok(developerService.deleteDeveloper(id));
+        developerService.deleteDeveloper(id);
+        return ResponseEntity.noContent().build();
     }
 }

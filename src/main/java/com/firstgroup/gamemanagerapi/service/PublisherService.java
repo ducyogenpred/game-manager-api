@@ -1,20 +1,21 @@
 package com.firstgroup.gamemanagerapi.service;
 
-import com.firstgroup.gamemanagerapi.dto.PublisherDTO;
-import com.firstgroup.gamemanagerapi.entity.Publisher;
-import com.firstgroup.gamemanagerapi.mapper.PublisherMapper;
+import com.firstgroup.gamemanagerapi.model.dto.PublisherDTO;
+import com.firstgroup.gamemanagerapi.model.entity.Publisher;
+import com.firstgroup.gamemanagerapi.model.mapper.PublisherMapper;
 import com.firstgroup.gamemanagerapi.repository.PublisherRepository;
-import com.firstgroup.gamemanagerapi.request.PublisherRO;
-import com.firstgroup.gamemanagerapi.request.PublisherPatchRO;
-import jakarta.persistence.EntityNotFoundException;
+import com.firstgroup.gamemanagerapi.model.request.PublisherPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.PublisherRO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 public class PublisherService {
 
     private final PublisherRepository publisherRepository;
@@ -22,52 +23,61 @@ public class PublisherService {
 
     @Transactional
     public PublisherDTO createPublisher(@Valid PublisherRO ro) {
-        if (publisherRepository.existsByEmail(ro.email())) {
-            throw new IllegalArgumentException("Email already exists!");
-        }
-
         Publisher publisher = publisherMapper.toEntity(ro);
-        return publisherMapper.toDto(publisherRepository.save(publisher));
+
+        try {
+            return publisherMapper.toDto(publisherRepository.save(publisher));
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Publisher with this display name or email already exists.");
+        }
     }
 
-    public PublisherDTO getPublisherById(Long id) {
-        Publisher publisher = publisherRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Publisher with id" + id + "already exists"));
-        return publisherMapper.toDto(publisher);
+    public PublisherDTO getPublisherById(long id) {
+        return publisherMapper.toDto(publisherRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this ID does not exist.")));
     }
 
     public PublisherDTO getPublisherByName(String name) {
-        Publisher publisher = publisherRepository.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Publisher with name" + name + "already exists"));
-        return publisherMapper.toDto(publisher);
+        return publisherMapper.toDto(publisherRepository.findByName(name)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this display name does not exist.")));
+    }
+
+    public PublisherDTO getPublisherByEmail(String email) {
+        return publisherMapper.toDto(publisherRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this email does not exist.")));
     }
 
     @Transactional
-    public Publisher patchPublisher(Long id, @Valid PublisherPatchRO ro) {
-        Publisher publisher = publisherRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Developer not found!"));
-
-        if (ro.name().isPresent()) {
-            String name = ro.name().get();
-            if (publisherRepository.existsByName(name)) {
-                throw new IllegalArgumentException("Developer with this name already exists.");
-            }
-            publisher.setName(name);
+    public PublisherDTO patchPublisher(Long id, @Valid PublisherPatchRO ro) {
+        if (ro.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields provided for update.");
         }
 
-        ro.name().ifPresent(publisher::setName);
-        ro.email().ifPresent(publisher::setEmail);
-        ro.description().ifPresent(publisher::setDescription);
+        Publisher publisher = publisherRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this ID does not exist."));
 
-        return publisherRepository.save(publisher);
+        if (ro.name() != null && !ro.name().equals(publisher.getName())) {
+            if (publisherRepository.existsByName((ro.name()))) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Publisher with this display name already exists.");
+            }
+            publisher.setName(ro.name());
+        }
+
+        if (ro.email() != null && !ro.email().equals(publisher.getEmail())) {
+            if (publisherRepository.existsByEmail(ro.email())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Publisher with this email already exists.");
+            }
+            publisher.setEmail(ro.email());
+        }
+
+        publisherMapper.updatePublisherFromPatchRo(ro, publisher);
+        return publisherMapper.toDto(publisherRepository.save(publisher));
     }
 
     @Transactional
-    public Long deletePublisher (long id){
+    public void deletePublisher(Long id) {
         Publisher publisher = publisherRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Developer with id" + id + "already exists"));
-
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher with this ID does not exist."));
         publisherRepository.delete(publisher);
-        return id;
     }
 }

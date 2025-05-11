@@ -1,10 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.dto.PublisherDTO;
-import com.firstgroup.gamemanagerapi.request.PublisherRO;
+import com.firstgroup.gamemanagerapi.model.dto.PublisherDTO;
+import com.firstgroup.gamemanagerapi.model.request.PublisherRO;
 import com.firstgroup.gamemanagerapi.service.PublisherService;
-import com.firstgroup.gamemanagerapi.entity.Publisher;
-import com.firstgroup.gamemanagerapi.request.PublisherPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.PublisherPatchRO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,7 @@ public class PublisherController {
 
     @PostMapping
     public ResponseEntity<PublisherDTO> createPublisher (@Valid @RequestBody PublisherRO ro) {
-        PublisherDTO createdUser = publisherService.createPublisher(ro);
-        return ResponseEntity.ok(createdUser);
+        return ResponseEntity.ok(publisherService.createPublisher(ro));
     }
 
     @GetMapping("/{id}")
@@ -33,13 +31,19 @@ public class PublisherController {
         return ResponseEntity.ok(publisherService.getPublisherByName(name));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<PublisherDTO> getPublisherByEmail (@PathVariable String email) {
+        return ResponseEntity.ok(publisherService.getPublisherByEmail(email));
+    }
+
     @PatchMapping("/{id}")
-    public ResponseEntity<Publisher> patchPublisher (@PathVariable Long id, @Valid @RequestBody PublisherPatchRO ro) {
+    public ResponseEntity<PublisherDTO> patchPublisher (@PathVariable Long id, @Valid @RequestBody PublisherPatchRO ro) {
         return ResponseEntity.ok(publisherService.patchPublisher(id, ro));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deletePublisher(@PathVariable Long id) {
-        return ResponseEntity.ok(publisherService.deletePublisher(id));
+        publisherService.deletePublisher(id);
+        return ResponseEntity.noContent().build();
     }
 }
