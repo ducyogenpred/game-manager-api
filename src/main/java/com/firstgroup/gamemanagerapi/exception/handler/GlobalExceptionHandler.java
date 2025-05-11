@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
                     .body(ResponseUtils.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
         @ExceptionHandler(DataIntegrityViolationException.class)
-        public ResponseEntity<?> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        public ResponseEntity<?> error(DataIntegrityViolationException e) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(ResponseUtils.buildErrorResponse(HttpStatus.CONFLICT, "Conflict: Data already exists or violates constraints."));
