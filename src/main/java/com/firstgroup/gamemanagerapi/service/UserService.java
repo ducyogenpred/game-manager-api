@@ -1,5 +1,6 @@
 package com.firstgroup.gamemanagerapi.service;
 
+import com.firstgroup.gamemanagerapi.exception.ResourceNotFoundException;
 import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
 import com.firstgroup.gamemanagerapi.model.entity.User;
 import com.firstgroup.gamemanagerapi.model.mapper.UserMapper;
@@ -133,17 +134,6 @@ public class UserService {
         }
     }
 
-
-//    public UserDTO getUserByDisplayName(String displayName) {
-//        return userMapper.toDto(userRepository.findByDisplayName(displayName)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this display name does not exist.")));
-//    }
-
-//    public UserDTO getUserByEmail(String email) {
-//        return userMapper.toDto(userRepository.findByEmail(email)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this email does not exist.")));
-//    }
-
     @Transactional
     public UserDTO patchUser(Long id, @Valid UserPatchRO ro) {
         User user = userRepository.findById(id)
@@ -173,8 +163,18 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID does not exist."));
-        userRepository.delete(user);
+        try {
+            User user = getUserById(id);
+
+            if (Objects.isNull(user)) {
+                throw new ResourceNotFoundException("User not found");
+            }
+
+            userRepository.delete(user);
+        } catch (Exception e) {
+            String errorMessage = MessageUtils.deleteErrorMessage(USER);
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
+        }
     }
 }
