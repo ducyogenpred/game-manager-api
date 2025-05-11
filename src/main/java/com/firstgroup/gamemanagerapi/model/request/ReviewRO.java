@@ -10,9 +10,9 @@ public record ReviewRO(
         String content,
 
         @Positive(message = "Rating must be a positive number.")
-        @DecimalMin(value = "0.0", message = "Rating must be at least 0.")
-        @DecimalMax(value = "5.0", message = "Rating must be at most 5.")
-        double rating,
+        @Min(value = 1, message = "Rating must be at least 0")
+        @Max(value = 5, message = "Rating must be at most 5")
+        Integer rating,
 
         @NotNull(message = "User ID is required.")
         @Positive(message = "User ID must be positive.")

@@ -1,19 +1,17 @@
 package com.firstgroup.gamemanagerapi.model.request;
 
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 public record ReviewPatchRO(
-        @NotBlank(message = "Title must not be blank.")
+        @Pattern(regexp = "^\\S.*$", message = "Title must not start with a space.")
         String title,
 
-        @NotBlank(message = "Content must not be blank.")
+        @Pattern(regexp = "^\\S.*$", message = "Content must not start with a space.")
         String content,
 
-        @DecimalMin(value = "0.0", message = "Rating must be at least 0.")
-        @DecimalMax(value = "5.0", message = "Rating must be at most 5.")
-        Double rating
+        @Min(value = 1, message = "Rating must be at least 1")
+        @Max(value = 5, message = "Rating must be at most 5")
+        Integer rating
 ) {
     public boolean isEmpty() {
         return title == null && content == null && rating == null;
