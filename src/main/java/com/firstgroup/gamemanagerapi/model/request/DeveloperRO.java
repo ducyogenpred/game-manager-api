@@ -6,8 +6,10 @@ import jakarta.validation.constraints.Pattern;
 
 public record DeveloperRO (
         @NotBlank(message = "Developer name must not be blank.")
+        @Pattern(regexp = "^\\S.*$", message = "Name must not start with a space")
         String name,
 
+        @NotBlank(message = "Description must not be blank or whitespace-only")
         @Pattern(regexp = "^\\S.*$", message = "Description must not start with a space.")
         String description,
 
