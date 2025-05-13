@@ -13,25 +13,16 @@ public interface GenreMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "game", ignore = true)
-    @Mapping(target = "genres", ignore = true)
     Genre toEntity(GenreRO ro);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "game", ignore = true)
-    @Mapping(target = "genres", ignore = true)
     void updateFromPutRo(GenreRO ro, @MappingTarget Genre entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "game", ignore = true)
-    @Mapping(target = "genres", ignore = true)
     void updateFromPatchRo(GenrePatchRO ro, @MappingTarget Genre entity);
 }

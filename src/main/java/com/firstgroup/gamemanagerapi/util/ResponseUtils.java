@@ -1,6 +1,5 @@
 package com.firstgroup.gamemanagerapi.util;
 
-import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
 import com.firstgroup.gamemanagerapi.model.response.ErrorResponse;
 import com.firstgroup.gamemanagerapi.model.response.SuccessResponse;
 import org.springframework.http.HttpStatus;
@@ -9,41 +8,32 @@ import java.util.List;
 
 public class ResponseUtils {
 
-    public static <T> SuccessResponse<T> buildSuccessResponse(HttpStatus status, String message) {
-        SuccessResponse<T> response = new SuccessResponse<>();
-        response.setStatusCode(status.value());
-        response.setMessage(message);
-
-        return response;
+    public static <T> SuccessResponse<T> buildSuccessResponse(HttpStatus status, String message, T data) {
+        return SuccessResponse.<T>builder()
+                .statusCode(status.value())
+                .message(message)
+                .data(data)
+                .build();
     }
 
-    public static <T> SuccessResponse<T> buildSuccessResponse(HttpStatus status, String message, T data) {
-        SuccessResponse<T> response = new SuccessResponse<>();
-        response.setStatusCode(status.value());
-        response.setMessage(message);
-        response.setData(data);
+    public static <T> SuccessResponse<T> buildSuccessResponse(HttpStatus status, String message) {
+        return buildSuccessResponse(status, message, null);
+    }
 
-        return response;
+    public static <T> ErrorResponse<T> buildErrorResponse(HttpStatus status, String message, T data, List<ErrorResponse.FieldError> errors) {
+        return ErrorResponse.<T>builder()
+                .statusCode(status.value())
+                .message(message)
+                .data(data)
+                .errors(errors)
+                .build();
     }
 
     public static <T> ErrorResponse<T> buildErrorResponse(HttpStatus status, String message) {
-        ErrorResponse<T> response = new ErrorResponse<>();
-        response.setStatusCode(status.value());
-        response.setMessage(message);
-
-        return response;
+        return buildErrorResponse(status, message, null, null);
     }
 
-    public static <T> ErrorResponse<T> buildErrorResponse(HttpStatus status, String message, T data) {
-        ErrorResponse<T> response = new ErrorResponse<>();
-        response.setStatusCode(status.value());
-        response.setMessage(message);
-        response.setData(data);
-
-        return response;
-    }
-
-    public static Object buildSuccessResponse(HttpStatus httpStatus, String s, List<UserDTO> all, UserDTO user) {
-        return null;
+    public static <T> ErrorResponse<T> buildValidationErrorResponse(HttpStatus status, String message, List<ErrorResponse.FieldError> errors) {
+        return buildErrorResponse(status, message, null, errors);
     }
 }
