@@ -8,6 +8,7 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface PublisherMapper {
+
     PublisherDTO toDto(Publisher entity);
 
     @Mapping(target = "id", ignore = true)
@@ -17,11 +18,18 @@ public interface PublisherMapper {
     @Mapping(target = "updatedAt", ignore = true)
     Publisher toEntity(PublisherRO ro);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "reviewCount", ignore = true)
+    @Mapping(target = "ratingAverage", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateFromPutRo(PublisherPatchRO ro, @MappingTarget Publisher entity);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "reviewCount", ignore = true)
     @Mapping(target = "ratingAverage", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updatePublisherFromPatchRo(PublisherPatchRO ro, @MappingTarget Publisher entity);
+    void updateFromPatchRo(PublisherPatchRO ro, @MappingTarget Publisher entity);
 }

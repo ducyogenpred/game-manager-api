@@ -8,20 +8,22 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
     UserDTO toDto(User entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "games", ignore = true)
     User toEntity(UserRO ro);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateFromPutRo(UserPatchRO ro, @MappingTarget User entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "games", ignore = true)
-    void updateUserFromPatchRo(UserPatchRO ro, @MappingTarget User entity);
+    void updateFromPatchRo(UserPatchRO ro, @MappingTarget User entity);
 }

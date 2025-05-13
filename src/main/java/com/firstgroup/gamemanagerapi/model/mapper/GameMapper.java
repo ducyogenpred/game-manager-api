@@ -8,20 +8,22 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface GameMapper {
-    GameDTO toDto(Game game);
+
+    GameDTO toDto(Game entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "genres", ignore = true)
-    @Mapping(target = "users", ignore = true)
     Game toEntity(GameRO ro);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateFromPutRo(GamePatchRO ro, @MappingTarget Game entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "genres", ignore = true)
-    @Mapping(target = "users", ignore = true)
-    void updateFromGamePatchRO(GamePatchRO ro, @MappingTarget Game entity);
+    void updateFromPatchRo(GamePatchRO ro, @MappingTarget Game entity);
 }

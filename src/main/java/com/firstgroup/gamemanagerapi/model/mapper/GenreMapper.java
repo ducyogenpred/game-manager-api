@@ -8,6 +8,7 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface GenreMapper {
+
     GenreDTO toDto(Genre genre);
 
     @Mapping(target = "id", ignore = true)

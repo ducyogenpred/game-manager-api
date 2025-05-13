@@ -8,20 +8,22 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
+
     ReviewDTO toDto (Review entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "game", ignore = true)
     Review toEntity (ReviewRO ro);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateFromPutRO(ReviewPatchRO ro, @MappingTarget Review entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "game", ignore = true)
-    void updateFromReviewPatchRO(ReviewPatchRO ro, @MappingTarget Review entity);
+    void updateFromPatchRO(ReviewPatchRO ro, @MappingTarget Review entity);
 }
