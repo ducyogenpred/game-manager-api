@@ -2,7 +2,7 @@ package com.firstgroup.gamemanagerapi.model.request;
 
 import jakarta.validation.constraints.Pattern;
 
-public record GenrePatchRO (
+public record GenrePatchRO(
         @Pattern(regexp = "^\\S.*$", message = "Genre name must not start with a space.")
         String name,
 

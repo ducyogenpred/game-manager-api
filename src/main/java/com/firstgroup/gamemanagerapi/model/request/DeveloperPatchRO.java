@@ -3,7 +3,7 @@ package com.firstgroup.gamemanagerapi.model.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
-public record DeveloperPatchRO (
+public record DeveloperPatchRO(
         @Pattern(regexp = "^\\S.*$", message = "Name must not start with a space")
         String name,
 

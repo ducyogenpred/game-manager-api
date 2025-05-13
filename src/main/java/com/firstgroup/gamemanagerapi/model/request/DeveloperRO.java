@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record DeveloperRO (
+public record DeveloperRO(
         @NotBlank(message = "Developer name must not be blank.")
         @Pattern(regexp = "^\\S.*$", message = "Name must not start with a space")
         String name,
