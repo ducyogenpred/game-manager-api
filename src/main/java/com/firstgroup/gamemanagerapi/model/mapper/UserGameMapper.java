@@ -10,7 +10,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface UserGameMapper {
 
-    UserGameDTO toUserGameDTO(UserGame entity);
+    UserGameDTO toDto(UserGame entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "purchasedAt", ignore = true)
