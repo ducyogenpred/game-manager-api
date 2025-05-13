@@ -10,6 +10,6 @@ public record UserGamePatchRO(
         Boolean favourite
 ) {
     public boolean isEmpty() {
-        return purchaseAt == null;
+        return purchaseAt == null && favourite == null;
     }
 }
