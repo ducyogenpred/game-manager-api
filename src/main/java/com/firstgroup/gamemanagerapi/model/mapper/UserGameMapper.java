@@ -22,7 +22,7 @@ public interface UserGameMapper {
     @Mapping(target = "hoursPlayed", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "game", ignore = true)
-    void updateFromPatchRo(UserGameRO ro, @MappingTarget UserGame entity);
+    void updateFromPutRo(UserGameRO ro, @MappingTarget UserGame entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
@@ -30,5 +30,5 @@ public interface UserGameMapper {
     @Mapping(target = "hoursPlayed", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "game", ignore = true)
-    void updateFromPutRo(UserGamePatchRO ro, @MappingTarget UserGame entity);
+    void updateFromPatchRo(UserGamePatchRO ro, @MappingTarget UserGame entity);
 }
