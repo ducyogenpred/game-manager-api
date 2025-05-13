@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserGameRepository extends JpaRepository<UserGame, Long> {
+    boolean existsByUserIdAndGameId(Long userId, Long gameId);
 }
