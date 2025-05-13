@@ -9,7 +9,7 @@ public record UserGameDTO(
         long id,
         LocalDateTime purchasedAt,
         int hoursPlayed,
-        boolean isFavorite,
+        boolean favourite,
         User user,
         Game game
 ) {}
