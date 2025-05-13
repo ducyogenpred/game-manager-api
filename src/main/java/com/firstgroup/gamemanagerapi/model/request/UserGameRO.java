@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 public record UserGameRO(
         @NotNull(message = "Purchased date must not be blank.")
         @PastOrPresent(message = "Purchased date must be set in the past or present.")
-        LocalDateTime purchaseAt,
+        LocalDateTime purchasedAt,
 
-        Boolean isFavorite,
+        Boolean favourite,
 
         @NotNull(message = "User ID is required.")
         @Positive(message = "User ID must be positive.")
