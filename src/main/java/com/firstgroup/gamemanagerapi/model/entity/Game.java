@@ -16,8 +16,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Game {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -39,23 +39,21 @@ public class Game {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @Builder.Default
     private Set<GameGenre> genres = new HashSet<>();
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @Builder.Default
     private Set<UserGame> users = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "developer_id", nullable = false)
-    @JsonBackReference
-    private Developer developer;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     @JsonBackReference
     private Publisher publisher;
+
+    @ManyToOne
+    @JoinColumn(name = "developer_id", nullable = false)
+    @JsonBackReference
+    private Developer developer;
 
     @PrePersist
     protected void onCreate() {

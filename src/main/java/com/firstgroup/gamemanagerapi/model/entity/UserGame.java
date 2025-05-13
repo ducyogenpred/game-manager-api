@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserGame {
 
     @Id
@@ -26,7 +25,7 @@ public class UserGame {
     private int hoursPlayed;
 
     @Column(name = "is_favorite", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isFavorite;
+    private boolean favourite;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

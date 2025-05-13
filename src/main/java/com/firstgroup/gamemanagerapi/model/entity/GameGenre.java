@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class GameGenre {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

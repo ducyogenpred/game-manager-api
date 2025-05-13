@@ -13,8 +13,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Developer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -40,9 +40,8 @@ public class Developer {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "developer")
     @JsonManagedReference
-    @Builder.Default
     private Set<Game> games = new HashSet<>();
 
     @PrePersist
