@@ -23,7 +23,7 @@ public interface DeveloperMapper {
     @Mapping(target = "ratingAverage", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updateFromPutRo(DeveloperPatchRO ro, @MappingTarget Developer entity);
+    void updateFromPutRo(DeveloperRO ro, @MappingTarget Developer entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)

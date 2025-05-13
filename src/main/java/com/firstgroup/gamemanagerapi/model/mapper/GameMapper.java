@@ -19,7 +19,7 @@ public interface GameMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updateFromPutRo(GamePatchRO ro, @MappingTarget Game entity);
+    void updateFromPutRo(GameRO ro, @MappingTarget Game entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)

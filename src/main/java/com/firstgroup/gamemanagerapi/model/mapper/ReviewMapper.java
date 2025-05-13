@@ -19,7 +19,7 @@ public interface ReviewMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updateFromPutRO(ReviewPatchRO ro, @MappingTarget Review entity);
+    void updateFromPutRO(ReviewRO ro, @MappingTarget Review entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)

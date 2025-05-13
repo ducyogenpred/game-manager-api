@@ -61,22 +61,22 @@ public class GenreService {
     }
 
     @Transactional
-    public GenreDTO update(Long id, GenreRO genreRo) {
+    public GenreDTO update(Long id, GenreRO ro) {
         Genre genre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre not found with ID: " + id));
 
-        genreMapper.updateFromPutRo(genreRo, genre);
+        genreMapper.updateFromPutRo(ro, genre);
         Genre updated = genreRepository.save(genre);
         log.info(MessageUtils.updateSuccess(GENRE));
         return genreMapper.toDto(updated);
     }
 
     @Transactional
-    public GenreDTO patch(Long id, GenrePatchRO genreRo) {
+    public GenreDTO patch(Long id, GenrePatchRO ro) {
         Genre genre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre not found with ID: " + id));
 
-        genreMapper.updateFromPatchRo(genreRo, genre);
+        genreMapper.updateFromPatchRo(ro, genre);
         Genre updated = genreRepository.save(genre);
         log.info(MessageUtils.updateSuccess(GENRE));
         return genreMapper.toDto(genreRepository.save(updated));

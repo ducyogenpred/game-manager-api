@@ -23,7 +23,7 @@ public interface PublisherMapper {
     @Mapping(target = "ratingAverage", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updateFromPutRo(PublisherPatchRO ro, @MappingTarget Publisher entity);
+    void updateFromPutRo(PublisherRO ro, @MappingTarget Publisher entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
