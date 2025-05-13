@@ -2,20 +2,12 @@ package com.firstgroup.gamemanagerapi.model.dto;
 
 import com.firstgroup.gamemanagerapi.model.entity.Game;
 import com.firstgroup.gamemanagerapi.model.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ReviewDTO {
-    private long id;
-    private String title;
-    private String content;
-    private  Double rating;
-    private User user;
-    private Game game;
-}
+public record ReviewDTO(
+        long id,
+        String title,
+        String content,
+        Double rating,
+        User user,
+        Game game
+) {}
