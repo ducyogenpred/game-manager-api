@@ -37,23 +37,7 @@ public class UserService {
         boolean displayNameExists = userRepository.existsByDisplayName(ro.displayName());
 
         if (emailExists || displayNameExists) {
-            List<ErrorResponse.FieldError> errors = new ArrayList<>();
-
-            if (emailExists) {
-                errors.add(new ErrorResponse.FieldError(
-                        "email",
-                        "Email '" + ro.email() + "' already exists.",
-                        ro.email()
-                ));
-            }
-
-            if (displayNameExists) {
-                errors.add(new ErrorResponse.FieldError(
-                        "displayName",
-                        "Display name '" + ro.displayName() + "' already exists.",
-                        ro.displayName()
-                ));
-            }
+            List<ErrorResponse.FieldError> errors = getFieldErrors(ro, emailExists, displayNameExists);
 
             throw new AlreadyExistsException("User", errors);
         }
@@ -62,6 +46,27 @@ public class UserService {
         User saved = userRepository.save(entity);
         log.info(MessageUtils.saveSuccess(USER));
         return userMapper.toDto(saved);
+    }
+
+    private static List<ErrorResponse.FieldError> getFieldErrors(UserRO ro, boolean emailExists, boolean displayNameExists) {
+        List<ErrorResponse.FieldError> errors = new ArrayList<>();
+
+        if (emailExists) {
+            errors.add(new ErrorResponse.FieldError(
+                    "email",
+                    "Email '" + ro.email() + "' already exists.",
+                    ro.email()
+            ));
+        }
+
+        if (displayNameExists) {
+            errors.add(new ErrorResponse.FieldError(
+                    "displayName",
+                    "Display name '" + ro.displayName() + "' already exists.",
+                    ro.displayName()
+            ));
+        }
+        return errors;
     }
 
     public List<UserDTO> getAll() {

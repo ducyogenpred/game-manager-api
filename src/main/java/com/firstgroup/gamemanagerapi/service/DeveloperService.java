@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -32,10 +33,11 @@ public class DeveloperService {
 
     @Transactional
     public DeveloperDTO save(DeveloperRO ro) {
-        if (developerRepository.existsByName(ro.name())) {
+        boolean nameExists = developerRepository.existsByName(ro.name());
+
+        if (nameExists) {
             List<ErrorResponse.FieldError> errors = List.of(
-                    new ErrorResponse.FieldError("name", "Developer name '" + ro.name() + "' already exists.", ro.name()),
-                    new ErrorResponse.FieldError("email", "Developer email '" + ro.email() + "' already exists.", ro.email())
+                    new ErrorResponse.FieldError("name", "Developer name already exists.", ro.name())
             );
             throw new AlreadyExistsException(DEVELOPER, errors);
         }

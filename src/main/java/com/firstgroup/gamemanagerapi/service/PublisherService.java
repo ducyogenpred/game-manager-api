@@ -5,8 +5,8 @@ import com.firstgroup.gamemanagerapi.exception.ResourceNotFoundException;
 import com.firstgroup.gamemanagerapi.model.dto.PublisherDTO;
 import com.firstgroup.gamemanagerapi.model.entity.Publisher;
 import com.firstgroup.gamemanagerapi.model.mapper.PublisherMapper;
-import com.firstgroup.gamemanagerapi.model.request.PublisherPatchRO;
 import com.firstgroup.gamemanagerapi.model.request.PublisherRO;
+import com.firstgroup.gamemanagerapi.model.request.PublisherPatchRO;
 import com.firstgroup.gamemanagerapi.model.response.ErrorResponse;
 import com.firstgroup.gamemanagerapi.repository.PublisherRepository;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
@@ -32,10 +32,11 @@ public class PublisherService {
 
     @Transactional
     public PublisherDTO save(PublisherRO ro) {
-        if (publisherRepository.existsByName(ro.name())) {
+        boolean nameExists = publisherRepository.existsByName(ro.name());
+
+        if (nameExists) {
             List<ErrorResponse.FieldError> errors = List.of(
-                    new ErrorResponse.FieldError("name", "Publisher name '" + ro.name() + "' already exists.", ro.name()),
-                    new ErrorResponse.FieldError("email", "Publisher email '" + ro.email() + "' already exists.", ro.email())
+                    new ErrorResponse.FieldError("name", "Publisher name already exists.", ro.name())
             );
             throw new AlreadyExistsException(PUBLISHER, errors);
         }
