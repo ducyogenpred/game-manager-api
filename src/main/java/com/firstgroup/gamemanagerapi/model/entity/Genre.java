@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @Entity
 @Table(name = "genres")
 @Getter
@@ -32,9 +33,10 @@ public class Genre {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<GameGenre> genres = new HashSet<>();
+    @Builder.Default
+    private Set<GameGenre> games = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {
