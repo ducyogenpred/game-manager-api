@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -32,11 +33,28 @@ public class UserService {
 
     @Transactional
     public UserDTO save(UserRO ro) {
-        if (userRepository.existsByEmail(ro.email())) {
-            List<ErrorResponse.FieldError> errors = List.of(
-                    new ErrorResponse.FieldError("displayName", "Display name '" + ro.displayName() + "' already exists.", ro.displayName()),
-                    new ErrorResponse.FieldError("email", "Email '" + ro.email() + "' already exists.", ro.email())
-            );
+        boolean emailExists = userRepository.existsByEmail(ro.email());
+        boolean displayNameExists = userRepository.existsByDisplayName(ro.displayName());
+
+        if (emailExists || displayNameExists) {
+            List<ErrorResponse.FieldError> errors = new ArrayList<>();
+
+            if (emailExists) {
+                errors.add(new ErrorResponse.FieldError(
+                        "email",
+                        "Email '" + ro.email() + "' already exists.",
+                        ro.email()
+                ));
+            }
+
+            if (displayNameExists) {
+                errors.add(new ErrorResponse.FieldError(
+                        "displayName",
+                        "Display name '" + ro.displayName() + "' already exists.",
+                        ro.displayName()
+                ));
+            }
+
             throw new AlreadyExistsException("User", errors);
         }
 
