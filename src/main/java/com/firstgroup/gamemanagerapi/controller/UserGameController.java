@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.model.request.UserPatchRO;
-import com.firstgroup.gamemanagerapi.model.request.UserRO;
-import com.firstgroup.gamemanagerapi.service.UserService;
+import com.firstgroup.gamemanagerapi.model.dto.UserGameDTO;
+import com.firstgroup.gamemanagerapi.model.request.UserGamePatchRO;
+import com.firstgroup.gamemanagerapi.model.request.UserGameRO;
+import com.firstgroup.gamemanagerapi.service.UserGameService;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import com.firstgroup.gamemanagerapi.util.ResponseUtils;
 import jakarta.validation.Valid;
@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user-game")
 @RequiredArgsConstructor
-public class UserController {
+public class UserGameController {
 
-    private final UserService userService;
+    private final UserGameService userGameService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid UserRO ro) {
-        UserDTO entity = userService.save(ro);
+    public ResponseEntity<?> save(@RequestBody @Valid UserGameRO ro) {
+        UserGameDTO entity = userGameService.save(ro);
         return ResponseEntity.ok(ResponseUtils.buildSuccessResponse(
                 HttpStatus.OK,
-                MessageUtils.saveSuccess(UserService.USER),
+                MessageUtils.saveSuccess(UserGameService.USER_GAME),
                 entity));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        List<UserDTO> entities = userService.getAll();
+        List<UserGameDTO> entities = userGameService.getAll();
         String message;
 
         if (entities.isEmpty()) {
-            message = MessageUtils.retrieveEmpty(UserService.USERS);
+            message = MessageUtils.retrieveEmpty(UserGameService.USER_GAMES);
         } else {
-            message = MessageUtils.retrieveSuccess(UserService.USERS);
+            message = MessageUtils.retrieveSuccess(UserGameService.USER_GAMES);
         }
 
         return ResponseEntity.ok(
@@ -55,8 +55,8 @@ public class UserController {
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.retrieveSuccess(UserService.USER),
-                        userService.getById(id)
+                        MessageUtils.retrieveSuccess(UserGameService.USER_GAME),
+                        userGameService.getById(id)
                 )
         );
     }
@@ -64,13 +64,13 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @RequestBody @Valid UserRO ro
+            @RequestBody @Valid UserGameRO ro
     ) {
-        UserDTO entity = userService.update(id, ro);
+        UserGameDTO entity = userGameService.update(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(UserGameService.USER_GAME),
                         entity
                 )
         );
@@ -79,13 +79,13 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> patch(
             @PathVariable Long id,
-            @RequestBody @Valid UserPatchRO ro
+            @RequestBody @Valid UserGamePatchRO ro
     ) {
-        UserDTO entity = userService.patch(id, ro);
+        UserGameDTO entity = userGameService.patch(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(UserGameService.USER_GAME),
                         entity
                 )
         );
@@ -93,7 +93,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        userService.delete(id);
+        userGameService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

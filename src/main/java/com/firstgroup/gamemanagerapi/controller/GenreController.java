@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.model.request.UserPatchRO;
-import com.firstgroup.gamemanagerapi.model.request.UserRO;
-import com.firstgroup.gamemanagerapi.service.UserService;
+import com.firstgroup.gamemanagerapi.model.dto.GenreDTO;
+import com.firstgroup.gamemanagerapi.model.request.GenrePatchRO;
+import com.firstgroup.gamemanagerapi.model.request.GenreRO;
+import com.firstgroup.gamemanagerapi.service.GenreService;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import com.firstgroup.gamemanagerapi.util.ResponseUtils;
 import jakarta.validation.Valid;
@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/genre")
 @RequiredArgsConstructor
-public class UserController {
+public class GenreController {
 
-    private final UserService userService;
+    private final GenreService genreService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid UserRO ro) {
-        UserDTO entity = userService.save(ro);
+    public ResponseEntity<?> save(@RequestBody @Valid GenreRO ro) {
+        GenreDTO entity = genreService.save(ro);
         return ResponseEntity.ok(ResponseUtils.buildSuccessResponse(
                 HttpStatus.OK,
-                MessageUtils.saveSuccess(UserService.USER),
+                MessageUtils.saveSuccess(GenreService.GENRE),
                 entity));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        List<UserDTO> entities = userService.getAll();
+        List<GenreDTO> entities = genreService.getAll();
         String message;
 
         if (entities.isEmpty()) {
-            message = MessageUtils.retrieveEmpty(UserService.USERS);
+            message = MessageUtils.retrieveEmpty(GenreService.GENRES);
         } else {
-            message = MessageUtils.retrieveSuccess(UserService.USERS);
+            message = MessageUtils.retrieveSuccess(GenreService.GENRES);
         }
 
         return ResponseEntity.ok(
@@ -55,8 +55,8 @@ public class UserController {
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.retrieveSuccess(UserService.USER),
-                        userService.getById(id)
+                        MessageUtils.retrieveSuccess(GenreService.GENRE),
+                        genreService.getById(id)
                 )
         );
     }
@@ -64,13 +64,13 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @RequestBody @Valid UserRO ro
+            @RequestBody @Valid GenreRO ro
     ) {
-        UserDTO entity = userService.update(id, ro);
+        GenreDTO entity = genreService.update(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(GenreService.GENRE),
                         entity
                 )
         );
@@ -79,13 +79,13 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> patch(
             @PathVariable Long id,
-            @RequestBody @Valid UserPatchRO ro
+            @RequestBody @Valid GenrePatchRO ro
     ) {
-        UserDTO entity = userService.patch(id, ro);
+        GenreDTO entity = genreService.patch(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(GenreService.GENRE),
                         entity
                 )
         );
@@ -93,7 +93,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        userService.delete(id);
+        genreService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

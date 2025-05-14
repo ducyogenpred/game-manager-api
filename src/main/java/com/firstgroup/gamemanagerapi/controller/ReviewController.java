@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.model.request.UserPatchRO;
-import com.firstgroup.gamemanagerapi.model.request.UserRO;
-import com.firstgroup.gamemanagerapi.service.UserService;
+import com.firstgroup.gamemanagerapi.model.dto.ReviewDTO;
+import com.firstgroup.gamemanagerapi.model.request.ReviewPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.ReviewRO;
+import com.firstgroup.gamemanagerapi.service.ReviewService;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import com.firstgroup.gamemanagerapi.util.ResponseUtils;
 import jakarta.validation.Valid;
@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/review")
 @RequiredArgsConstructor
-public class UserController {
+public class ReviewController {
 
-    private final UserService userService;
+    private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid UserRO ro) {
-        UserDTO entity = userService.save(ro);
+    public ResponseEntity<?> save(@RequestBody @Valid ReviewRO ro) {
+        ReviewDTO entity = reviewService.save(ro);
         return ResponseEntity.ok(ResponseUtils.buildSuccessResponse(
                 HttpStatus.OK,
-                MessageUtils.saveSuccess(UserService.USER),
+                MessageUtils.saveSuccess(ReviewService.REVIEW),
                 entity));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        List<UserDTO> entities = userService.getAll();
+        List<ReviewDTO> entities = reviewService.getAll();
         String message;
 
         if (entities.isEmpty()) {
-            message = MessageUtils.retrieveEmpty(UserService.USERS);
+            message = MessageUtils.retrieveEmpty(ReviewService.REVIEWS);
         } else {
-            message = MessageUtils.retrieveSuccess(UserService.USERS);
+            message = MessageUtils.retrieveSuccess(ReviewService.REVIEWS);
         }
 
         return ResponseEntity.ok(
@@ -55,8 +55,8 @@ public class UserController {
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.retrieveSuccess(UserService.USER),
-                        userService.getById(id)
+                        MessageUtils.retrieveSuccess(ReviewService.REVIEW),
+                        reviewService.getById(id)
                 )
         );
     }
@@ -64,13 +64,13 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @RequestBody @Valid UserRO ro
+            @RequestBody @Valid ReviewRO ro
     ) {
-        UserDTO entity = userService.update(id, ro);
+        ReviewDTO entity = reviewService.update(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(ReviewService.REVIEW),
                         entity
                 )
         );
@@ -79,13 +79,13 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> patch(
             @PathVariable Long id,
-            @RequestBody @Valid UserPatchRO ro
+            @RequestBody @Valid ReviewPatchRO ro
     ) {
-        UserDTO entity = userService.patch(id, ro);
+        ReviewDTO entity = reviewService.patch(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(ReviewService.REVIEW),
                         entity
                 )
         );
@@ -93,7 +93,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        userService.delete(id);
+        reviewService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -11,13 +11,21 @@ public class HomeController {
     @GetMapping("/")
     public ResponseEntity<String> home() {
         return ResponseEntity.ok
-            ("DEVELOPERS OF THE FIRST GROUP'S GAME MANAGER API"
-                + "\nISAIAH RAPHAEL ALMUENA"
-                + "\nPRINZ EDWARD LIKIYAN DUCYOGEN"
-                + "\nCARLO MIGUEL GERONIMO"
-                + "\nJOHN DRAY BUENAVENTURA LAO"
-                + "\nYNGWIE SEBASTIAN GARCIA PATRICIO"
-                + "\nDIANE SHANE LLORCA OMAPAS"
-                + "\nLHAY ANN BAÑO ZAÑO");
+            ("""
+                    DEVELOPERS OF THE FIRST GROUP'S GAME MANAGER API\
+                    
+                    ISAIAH RAPHAEL ALMUENA\
+                    
+                    PRINZ EDWARD LIKIYAN DUCYOGEN\
+                    
+                    CARLO MIGUEL GERONIMO\
+                    
+                    JOHN DRAY BUENAVENTURA LAO\
+                    
+                    YNGWIE SEBASTIAN GARCIA PATRICIO\
+                    
+                    DIANE SHANE LLORCA OMAPAS\
+                    
+                    LHAY ANN BAÑO ZAÑO""");
     }
 }

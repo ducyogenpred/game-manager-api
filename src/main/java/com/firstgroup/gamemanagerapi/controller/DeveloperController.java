@@ -1,9 +1,9 @@
 package com.firstgroup.gamemanagerapi.controller;
 
-import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
-import com.firstgroup.gamemanagerapi.model.request.UserPatchRO;
-import com.firstgroup.gamemanagerapi.model.request.UserRO;
-import com.firstgroup.gamemanagerapi.service.UserService;
+import com.firstgroup.gamemanagerapi.model.dto.DeveloperDTO;
+import com.firstgroup.gamemanagerapi.model.request.DeveloperPatchRO;
+import com.firstgroup.gamemanagerapi.model.request.DeveloperRO;
+import com.firstgroup.gamemanagerapi.service.DeveloperService;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import com.firstgroup.gamemanagerapi.util.ResponseUtils;
 import jakarta.validation.Valid;
@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/developer")
 @RequiredArgsConstructor
-public class UserController {
+public class DeveloperController {
 
-    private final UserService userService;
+    private final DeveloperService developerService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid UserRO ro) {
-        UserDTO entity = userService.save(ro);
+    public ResponseEntity<?> save(@RequestBody @Valid DeveloperRO ro) {
+        DeveloperDTO entity = developerService.save(ro);
         return ResponseEntity.ok(ResponseUtils.buildSuccessResponse(
                 HttpStatus.OK,
-                MessageUtils.saveSuccess(UserService.USER),
+                MessageUtils.saveSuccess(DeveloperService.DEVELOPER),
                 entity));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        List<UserDTO> entities = userService.getAll();
+        List<DeveloperDTO> entities = developerService.getAll();
         String message;
 
         if (entities.isEmpty()) {
-            message = MessageUtils.retrieveEmpty(UserService.USERS);
+            message = MessageUtils.retrieveEmpty(DeveloperService.DEVELOPERS);
         } else {
-            message = MessageUtils.retrieveSuccess(UserService.USERS);
+            message = MessageUtils.retrieveSuccess(DeveloperService.DEVELOPERS);
         }
 
         return ResponseEntity.ok(
@@ -55,8 +55,8 @@ public class UserController {
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.retrieveSuccess(UserService.USER),
-                        userService.getById(id)
+                        MessageUtils.retrieveSuccess(DeveloperService.DEVELOPER),
+                        developerService.getById(id)
                 )
         );
     }
@@ -64,13 +64,13 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @RequestBody @Valid UserRO ro
+            @RequestBody @Valid DeveloperRO ro
     ) {
-        UserDTO entity = userService.update(id, ro);
+        DeveloperDTO entity = developerService.update(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(DeveloperService.DEVELOPER),
                         entity
                 )
         );
@@ -79,13 +79,13 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> patch(
             @PathVariable Long id,
-            @RequestBody @Valid UserPatchRO ro
+            @RequestBody @Valid DeveloperPatchRO ro
     ) {
-        UserDTO entity = userService.patch(id, ro);
+        DeveloperDTO entity = developerService.patch(id, ro);
         return ResponseEntity.ok(
                 ResponseUtils.buildSuccessResponse(
                         HttpStatus.OK,
-                        MessageUtils.updateSuccess(UserService.USER),
+                        MessageUtils.updateSuccess(DeveloperService.DEVELOPER),
                         entity
                 )
         );
@@ -93,7 +93,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        userService.delete(id);
+        developerService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
