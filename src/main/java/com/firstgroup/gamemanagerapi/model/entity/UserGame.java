@@ -21,9 +21,6 @@ public class UserGame {
     @Column(name = "purchased_at", nullable = false)
     private LocalDateTime purchasedAt;
 
-    @Column(name = "hours_played", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int hoursPlayed;
-
     @Column(name = "is_favorite", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean favourite;
 
