@@ -7,5 +7,6 @@ public record GenreDTO(
         String name,
         String description,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        int gameCount
 ) {}

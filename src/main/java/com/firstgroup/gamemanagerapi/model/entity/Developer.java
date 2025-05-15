@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @Entity
 @Table(name = "developers")
 @Getter
@@ -28,20 +29,15 @@ public class Developer {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "review_count", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int reviewCount;
-
-    @Column(name = "rating_average", nullable = false, columnDefinition = "DOUBLE DEFAULT 0.0")
-    private double ratingAverage;
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "developer")
+    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Builder.Default
     private Set<Game> games = new HashSet<>();
 
     @PrePersist

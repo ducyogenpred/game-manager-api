@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class GameGenre {
 
     @Id
@@ -25,13 +26,13 @@ public class GameGenre {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "genre_id")
+    @JoinColumn(name = "genre_id", nullable = false)
     @JsonBackReference
     private Genre genre;
 
     @ManyToOne
+    @JoinColumn(name = "game_id", nullable = false)
     @JsonBackReference
-    @JoinColumn(name = "game_id")
     private Game game;
 
     @PrePersist
