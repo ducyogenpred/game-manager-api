@@ -29,6 +29,7 @@ public class UserService {
     public static final String USER = "User";
 
     private final UserRepository userRepository;
+
     private final UserMapper userMapper;
 
     @Transactional

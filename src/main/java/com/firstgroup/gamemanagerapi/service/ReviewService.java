@@ -3,12 +3,16 @@ package com.firstgroup.gamemanagerapi.service;
 import com.firstgroup.gamemanagerapi.exception.AlreadyExistsException;
 import com.firstgroup.gamemanagerapi.exception.ResourceNotFoundException;
 import com.firstgroup.gamemanagerapi.model.dto.ReviewDTO;
+import com.firstgroup.gamemanagerapi.model.entity.Game;
 import com.firstgroup.gamemanagerapi.model.entity.Review;
+import com.firstgroup.gamemanagerapi.model.entity.User;
 import com.firstgroup.gamemanagerapi.model.mapper.ReviewMapper;
 import com.firstgroup.gamemanagerapi.model.request.ReviewRO;
 import com.firstgroup.gamemanagerapi.model.request.ReviewPatchRO;
 import com.firstgroup.gamemanagerapi.model.response.ErrorResponse;
+import com.firstgroup.gamemanagerapi.repository.GameRepository;
 import com.firstgroup.gamemanagerapi.repository.ReviewRepository;
+import com.firstgroup.gamemanagerapi.repository.UserRepository;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +32,9 @@ public class ReviewService {
     public static final String REVIEW = "Review";
 
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final GameRepository gameRepository;
+
     private final ReviewMapper reviewMapper;
 
     @Transactional
@@ -39,7 +46,13 @@ public class ReviewService {
             throw new AlreadyExistsException(REVIEW, errors);
         }
 
-        Review entity = reviewMapper.toEntity(ro);
+        User user = userRepository.findById(ro.userId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Game game = gameRepository.findById(ro.gameId())
+                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
+
+        Review entity = reviewMapper.toEntity(ro, user, game);
         Review saved = reviewRepository.save(entity);
         log.info(MessageUtils.saveSuccess(REVIEW));
         return reviewMapper.toDto(saved);

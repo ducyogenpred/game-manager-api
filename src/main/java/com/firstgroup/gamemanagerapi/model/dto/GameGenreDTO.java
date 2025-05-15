@@ -6,6 +6,6 @@ public record GameGenreDTO(
         long id,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        GenreDTO genre,
-        GameDTO game
+        long gameId,
+        long genreId
 ) {}

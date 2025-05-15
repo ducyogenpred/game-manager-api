@@ -41,7 +41,7 @@ public class Publisher {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "publisher")
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     @Builder.Default
     private Set<Game> games = new HashSet<>();
