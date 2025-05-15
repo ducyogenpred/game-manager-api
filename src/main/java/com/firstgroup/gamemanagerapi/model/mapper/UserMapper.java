@@ -14,6 +14,7 @@ public interface UserMapper {
     UserDTO toDto(User entity);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "description", source = "ro.description")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     User toEntity(UserRO ro, Review review, Game game);
