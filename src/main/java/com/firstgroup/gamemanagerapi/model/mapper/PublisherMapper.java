@@ -17,16 +17,12 @@ public interface PublisherMapper {
     PublisherDTO toDto(Publisher entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "reviewCount", ignore = true)
-    @Mapping(target = "ratingAverage", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "games", ignore = true)
     Publisher toEntity(PublisherRO ro);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "reviewCount", ignore = true)
-    @Mapping(target = "ratingAverage", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "games", ignore = true)
@@ -34,8 +30,6 @@ public interface PublisherMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "reviewCount", ignore = true)
-    @Mapping(target = "ratingAverage", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "games", ignore = true)
