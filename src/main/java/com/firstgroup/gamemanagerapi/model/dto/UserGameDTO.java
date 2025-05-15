@@ -8,5 +8,5 @@ public record UserGameDTO(
         int hoursPlayed,
         boolean favourite,
         long userId,
-        long gameIds
+        long gameId
 ) {}
