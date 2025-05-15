@@ -15,16 +15,22 @@ public interface UserMapper {
     @Mapping(target = "description", source = "ro.description")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
     User toEntity(UserRO ro);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
     void updateFromPutRo(UserRO ro, @MappingTarget User entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
     void updateFromPatchRo(UserPatchRO ro, @MappingTarget User entity);
 }

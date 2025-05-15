@@ -3,12 +3,16 @@ package com.firstgroup.gamemanagerapi.service;
 import com.firstgroup.gamemanagerapi.exception.AlreadyExistsException;
 import com.firstgroup.gamemanagerapi.exception.ResourceNotFoundException;
 import com.firstgroup.gamemanagerapi.model.dto.UserGameDTO;
+import com.firstgroup.gamemanagerapi.model.entity.Game;
+import com.firstgroup.gamemanagerapi.model.entity.User;
 import com.firstgroup.gamemanagerapi.model.entity.UserGame;
 import com.firstgroup.gamemanagerapi.model.mapper.UserGameMapper;
 import com.firstgroup.gamemanagerapi.model.request.UserGameRO;
 import com.firstgroup.gamemanagerapi.model.request.UserGamePatchRO;
 import com.firstgroup.gamemanagerapi.model.response.ErrorResponse;
+import com.firstgroup.gamemanagerapi.repository.GameRepository;
 import com.firstgroup.gamemanagerapi.repository.UserGameRepository;
+import com.firstgroup.gamemanagerapi.repository.UserRepository;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +32,9 @@ public class UserGameService {
     public static final String USER_GAME = "UserGame";
 
     private final UserGameRepository userGameRepository;
+    private final UserRepository userRepository;
+    private final GameRepository gameRepository;
+
     private final UserGameMapper userGameMapper;
 
     @Transactional
@@ -39,7 +46,13 @@ public class UserGameService {
             throw new AlreadyExistsException(USER_GAME, errors);
         }
 
-        UserGame entity = userGameMapper.toEntity(ro);
+        User user = userRepository.findById(ro.userId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Game game = gameRepository.findById(ro.gameId())
+                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
+
+        UserGame entity = userGameMapper.toEntity(ro, user, game);
         UserGame saved = userGameRepository.save(entity);
         log.info(MessageUtils.saveSuccess(USER_GAME));
         return userGameMapper.toDto(saved);
