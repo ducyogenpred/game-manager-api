@@ -2,6 +2,7 @@ package com.firstgroup.gamemanagerapi.model.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public record GameDTO(
         long id,
@@ -9,5 +10,11 @@ public record GameDTO(
         String description,
         LocalDate releaseDate,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        long developerId,
+        String developerName,
+        long publisherId,
+        String publisherName,
+        Set<String> genres,
+        Set<Long> userIds
 ) {}

@@ -1,6 +1,8 @@
 package com.firstgroup.gamemanagerapi.model.mapper;
 
 import com.firstgroup.gamemanagerapi.model.dto.UserDTO;
+import com.firstgroup.gamemanagerapi.model.entity.Game;
+import com.firstgroup.gamemanagerapi.model.entity.Review;
 import com.firstgroup.gamemanagerapi.model.entity.User;
 import com.firstgroup.gamemanagerapi.model.request.UserPatchRO;
 import com.firstgroup.gamemanagerapi.model.request.UserRO;
@@ -14,7 +16,7 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    User toEntity(UserRO ro);
+    User toEntity(UserRO ro, Review review, Game game);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)

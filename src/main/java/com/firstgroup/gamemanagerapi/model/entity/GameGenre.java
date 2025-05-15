@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"game", "genre"})
+@EqualsAndHashCode
 public class GameGenre {
 
     @Id

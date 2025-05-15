@@ -1,6 +1,7 @@
 package com.firstgroup.gamemanagerapi.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public record PublisherDTO(
         long id,
@@ -10,5 +11,6 @@ public record PublisherDTO(
         int reviewCount,
         double ratingAverage,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        Set<Long> gameIds
 ) {}

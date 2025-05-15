@@ -2,11 +2,15 @@ package com.firstgroup.gamemanagerapi.service;
 
 import com.firstgroup.gamemanagerapi.exception.ResourceNotFoundException;
 import com.firstgroup.gamemanagerapi.model.dto.GameDTO;
+import com.firstgroup.gamemanagerapi.model.entity.Developer;
 import com.firstgroup.gamemanagerapi.model.entity.Game;
+import com.firstgroup.gamemanagerapi.model.entity.Publisher;
 import com.firstgroup.gamemanagerapi.model.mapper.GameMapper;
 import com.firstgroup.gamemanagerapi.model.request.GamePatchRO;
 import com.firstgroup.gamemanagerapi.model.request.GameRO;
+import com.firstgroup.gamemanagerapi.repository.DeveloperRepository;
 import com.firstgroup.gamemanagerapi.repository.GameRepository;
+import com.firstgroup.gamemanagerapi.repository.PublisherRepository;
 import com.firstgroup.gamemanagerapi.util.MessageUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +30,20 @@ public class GameService {
     public static final String GAME = "Game";
 
     private final GameRepository gameRepository;
+    private final PublisherRepository publisherRepository;
+    private final DeveloperRepository developerRepository;
+
     private final GameMapper gameMapper;
 
     @Transactional
     public GameDTO save(GameRO ro) {
-        Game entity = gameMapper.toEntity(ro);
+        Publisher publisher = publisherRepository.findById(ro.publisherId())
+                .orElseThrow(() -> new ResourceNotFoundException("Publisher not found"));
+
+        Developer developer = developerRepository.findById(ro.developerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Developer not found"));
+
+        Game entity = gameMapper.toEntity(ro, publisher, developer);
         Game saved = gameRepository.save(entity);
         log.info(MessageUtils.saveSuccess(GAME));
         return gameMapper.toDto(saved);
@@ -56,7 +69,13 @@ public class GameService {
         Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Game not found with ID: " + id));
 
-        gameMapper.updateFromPutRo(ro, game);
+        Publisher publisher = publisherRepository.findById(ro.publisherId())
+                .orElseThrow(() -> new ResourceNotFoundException("Publisher not found"));
+
+        Developer developer = developerRepository.findById(ro.developerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Developer not found"));
+
+        gameMapper.updateFromPutRo(ro, game, publisher, developer);
         Game updated = gameRepository.save(game);
         log.info(MessageUtils.updateSuccess(GAME));
         return gameMapper.toDto(updated);
@@ -66,6 +85,18 @@ public class GameService {
     public GameDTO patch(Long id, GamePatchRO ro) {
         Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Game not found with ID: " + id));
+
+        if (ro.publisherId() != null) {
+            Publisher publisher = publisherRepository.findById(ro.publisherId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Publisher not found"));
+            game.setPublisher(publisher);
+        }
+
+        if (ro.developerId() != null) {
+            Developer developer = developerRepository.findById(ro.developerId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Developer not found"));
+            game.setDeveloper(developer);
+        }
 
         gameMapper.updateFromPatchRo(ro, game);
         Game updated = gameRepository.save(game);
