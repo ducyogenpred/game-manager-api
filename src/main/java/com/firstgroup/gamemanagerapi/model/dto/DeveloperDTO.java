@@ -8,8 +8,6 @@ public record DeveloperDTO(
         String name,
         String email,
         String description,
-        int reviewCount,
-        double ratingAverage,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Set<Long> gameIds
